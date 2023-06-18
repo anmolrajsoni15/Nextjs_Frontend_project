@@ -1,0 +1,85 @@
+.circle1 .imgBx{
+    top: 36%;
+    left: -12%;
+    position: absolute;
+    transform: rotate(calc(360deg/2 * var(--i)));
+    transform-origin: 8rem;
+    animation: animate_1 7s linear infinite;
+}
+
+.circle2 .imgBx{
+    top: 41%;
+    left: -9%;
+    position: absolute;
+    transform: rotate(calc(360deg/2 * var(--i)));
+    transform-origin: 11rem;
+    animation: animate_0 15s linear infinite;
+}
+
+.circle3 .imgBx{
+    top: 43%;
+    left: -6%;
+    position: absolute;
+    transform: rotate(calc(360deg/2 * var(--i)));
+    transform-origin: 14rem;
+    animation: animate_1 20s linear infinite;
+}
+
+.img2{
+    rotate: 180deg !important;
+}
+
+.circle2 .imgBx .img3{
+    rotate: 180deg !important;
+}
+
+.circle1 .img{
+    animation: animate_2 7s linear infinite;
+    width: 50px;
+}
+
+.circle2 .img{
+    animation: animate_2_ 15s linear infinite;
+    width: 50px;
+}
+
+.circle3 .img{
+    animation: animate_2 20s linear infinite;
+    width: 50px;
+}
+
+@keyframes animate_0 {
+    0%{
+        transform: rotate(calc(-360deg/2 * var(--i)));
+    }
+    100%{
+        transform: rotate(calc(-360deg/2 * var(--i))) rotate(-360deg);
+    }
+}
+
+@keyframes animate_1 {
+    0%{
+        transform: rotate(calc(360deg/2 * var(--i)));
+    }
+    100%{
+        transform: rotate(calc(360deg/2 * var(--i))) rotate(360deg);
+    }
+}
+
+@keyframes animate_2 {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes animate_2_ {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}

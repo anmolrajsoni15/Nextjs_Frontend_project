@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@700&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
+
+.htmlClass h1, h2, h3{
+    font-weight: 600 !important;
+    font-family: 'Inter', 'sans-serif' !important;
+    font-size: 30px !important;
+    line-height: 38px !important;
+    padding-top: 32px !important;
+    padding-bottom: 20px !important;
+    color: white !important;
+}
+
+.htmlClass p{
+    color:#A1A1AA !important;
+    font-size: 18px !important;
+    line-height: 28px !important;
+    font-weight: 400 !important;
+    font-family: 'Inter', 'sans-serif' !important;
+}
+
+.htmlClass img{
+    width: 100% !important;
+}
