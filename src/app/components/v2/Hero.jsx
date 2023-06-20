@@ -26,7 +26,7 @@ function Hero() {
             </div>
             <div>
               <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
-              <Button>Join the Waitlist</Button>
+              <Button text={'Join the Waitlist'}/>
               </Link>
             </div>
           </div>
