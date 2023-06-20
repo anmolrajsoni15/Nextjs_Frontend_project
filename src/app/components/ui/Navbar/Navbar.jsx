@@ -26,7 +26,7 @@ const Navbar = () => {
     }, [])
 
     return (
-        <header className='relative'>
+        <header className='relative z-10'>
             <div className="custom-screen md:hidden">
                 <NavHeader menuBtnEl={menuBtnEl} state={state} onClick={() => setState(!state)} />
             </div>

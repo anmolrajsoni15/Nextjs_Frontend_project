@@ -22,7 +22,9 @@ const customStyles = {
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         border: 'none',
+        borderRadius: '8px',
         padding: 'none',
+        boxShadow: '0px 6px 6px rgba(0, 0, 0, 0.25)',
     }
 }
 
@@ -180,7 +182,7 @@ const Sidebar = () => {
                             e.preventDefault();
                             createNewBloc();
                         }}
-                        className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-black text-white rounded-lg">
+                        className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-[#181818] text-white rounded-lg">
                         <h1 className='text-center font-spacegrotesk font-bold text-5xl'>New  Bloc</h1>
                         <div className='w-full'>
                             <label htmlFor="" className='text-lg font-spacegrotesk font-medium text-[#e7e7e7] pl-1'>Name</label>
@@ -189,7 +191,7 @@ const Sidebar = () => {
                                 value={blocName}
                                 placeholder='Name your Bloc'
                                 onChange={handleBlocName}
-                                className='bg-black border border-solid text-[#e1e1e1] border-slate-500 rounded-md px-2 py-1 
+                                className='bg-[#292929] border border-solid text-[#e1e1e1] border-slate-500 rounded-md px-2 py-1 
                         font-spacegrotesk text-base font-normal focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-5 w-full h-10'
                                 required />
                         </div>
