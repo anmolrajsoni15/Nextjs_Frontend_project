@@ -7,7 +7,7 @@ import { Bloclist } from '../lib/Types'
 import Dropdown from '../components/dashboard/Dropdown'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import BlocList from '../components/dashboard/Bloclist'
+import BlocList from '../components/dashboard/BlocList'
 
 const getBlocs = async (): Promise<Bloclist[]> => {
   const token = cookies().get('jwt')?.value
