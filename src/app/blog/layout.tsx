@@ -1,7 +1,8 @@
 import './globals.css'
+import '../globals.css'
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import React, { ReactNode, use } from 'react';
+import React, { ReactNode } from 'react';
 
 export const metadata = {
   title: 'Bloc - Blogs',

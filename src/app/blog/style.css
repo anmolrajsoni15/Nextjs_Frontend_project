@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@700&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
 
-h1, h2, h3{
+.htmlClass h1, h2, h3{
     font-weight: 600 !important;
     font-family: 'Inter', 'sans-serif' !important;
     font-size: 30px !important;
@@ -11,7 +11,7 @@ h1, h2, h3{
     color: white !important;
 }
 
-p{
+.htmlClass p{
     color:#A1A1AA !important;
     font-size: 18px !important;
     line-height: 28px !important;
@@ -19,6 +19,6 @@ p{
     font-family: 'Inter', 'sans-serif' !important;
 }
 
-img{
+.htmlClass img{
     width: 100% !important;
 }

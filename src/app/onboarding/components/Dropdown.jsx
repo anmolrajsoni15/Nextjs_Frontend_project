@@ -4,13 +4,12 @@ import { useState, useEffect } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const options = [
-  "Option 1",
-  "Option 2",
-  "Option 3",
-  "BigOption 4",
-  "Option 5",
-  "BigOption 6",
-  "Option 7",
+  "Founder/ Co-Founder",
+  "Developer",
+  "Customer Support",
+  "Marketing",
+  "Sales",
+  "Operations",
 ]
 
 const Dropdown = ({ icon, setValue, userData }) => {

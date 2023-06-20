@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import React from "react";
 import { getSinglePost } from "../../../lib/ghost-client";
 import "../../style.css";
+import SampleBlog from "../../../../../public/images/blog_images/SampleBlog.jpg";
 
 // SEO
 export async function generateMetadata({
@@ -87,9 +88,12 @@ async function Read({ params }: { params: { slug: string } }) {
               {getPost?.excerpt || ""}
             </div>
             <div className="flex flex-row flex-wrap gap-2 items-center justify-center">
-              {getPost?.tags?.map((item,index) => {
+              {getPost?.tags?.map((item) => {
                 return (
-                  <span key={index} className="py-1 px-3 border border-solid rounded-2xl border-[#3C3C3C] font-inter font-medium text-sm leading-5">
+                  <span
+                    key={item.id}
+                    className="py-1 px-3 border border-solid rounded-2xl border-[#3C3C3C] font-inter font-medium text-sm leading-5"
+                  >
                     <Link href={`/blog/tags/${item.slug}`}>{item.name}</Link>
                   </span>
                 );
@@ -98,7 +102,7 @@ async function Read({ params }: { params: { slug: string } }) {
           </div>
           <div className="flex w-full items-center justify-center">
             <Image
-              src={getPost?.feature_image || '/images/blog_images/SampleBlog.jpg'}
+              src={getPost?.feature_image || SampleBlog}
               alt={getPost?.feature_image_alt || ""}
               width={800}
               height={530}

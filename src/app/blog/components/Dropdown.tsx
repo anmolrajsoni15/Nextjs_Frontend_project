@@ -55,7 +55,7 @@ const Dropdown = ({ path }: { path: string }) => {
               View all
             </li>
           </Link>
-          {allTags?.slice(0, numTagsToShow).map((item,index) => {
+          {allTags?.slice(0, numTagsToShow).map((item) => {
             return (
               <Link href={`/blog/tags/${item.slug}`} key={item.id}>
                 <li
