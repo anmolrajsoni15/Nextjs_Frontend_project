@@ -14,18 +14,18 @@ import { updateUserData, getUser } from "../../services/apiServices";
 import { useRouter } from "next/navigation";
 
 function Who({ incrementCnt }) {
-  const router = useRouter();
 
   const [user, setUser] = useState({nameing: ""});
   const [name, setName] = useState("");
   const [org, setOrg] = useState('');
   const [designation, setDesignation] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
+    
     const token = getCookie("jwt");
     if (!token) {
       router.push("/");
-      return;
     }
   
     const fetchData = async () => {

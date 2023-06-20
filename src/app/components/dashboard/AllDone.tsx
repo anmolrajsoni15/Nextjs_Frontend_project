@@ -3,11 +3,23 @@ import Link from 'next/link'
 import React from 'react'
 import Button from './Button'
 import { deleteCookie } from 'cookies-next'
+import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { clearFiles } from 'src/app/Redux/features/UploadFile'
+import { clearMessage } from 'src/app/Redux/features/Message'
 
 function AllDone() {
 
-    const handleClick = ()=>{
-        deleteCookie('blocId')
+    const router = useRouter()
+    const dispatch = useDispatch()
+
+    const handleClick = async ()=>{
+       await deleteCookie('blocId')
+       await router.push('/')
+       router.refresh()
+       dispatch(clearFiles())
+       dispatch(clearMessage())
+
       }
 
     return (

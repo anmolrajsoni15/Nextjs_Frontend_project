@@ -26,7 +26,6 @@ export const messageSlice = createSlice({
             state.splice(0, state.length);
         }
     }
-
 }
 )
 

@@ -29,8 +29,9 @@ const customStyles = {
 
 function ChatPageHeader() {
 
-    const link = 'https://askbloc.ai'
+
     const blocId = getCookie('blocId')
+    const link = `https://baseURL/bloc/${blocId}`
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 

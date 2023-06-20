@@ -2,12 +2,13 @@
 
 import React from "react";
 import { notFound } from "next/navigation";
-import type { PostsOrPages, Tag } from "@tryghost/content-api";
-import { getPostsByTag, getSingleTag } from "../../../lib/ghost-client";
+import type { PostsOrPages } from "@tryghost/content-api";
+import { getPostsByTag } from "../../../lib/ghost-client";
 import Header from "../../components/Header";
 import LeftPart from "../../components/LeftPart";
 import Dropdown from "../../components/Dropdown";
 import BlogCard from "../../components/BlogCard";
+
 
 async function Tags({ params }: { params: { slug: string } }) {
   let tagPosts: PostsOrPages = await getPostsByTag(params.slug);
@@ -27,7 +28,7 @@ async function Tags({ params }: { params: { slug: string } }) {
             <Dropdown path={params.slug} />
           </div>
           <div className="left w-1/4 hidden md:block">
-            <LeftPart path={params.slug} />
+            <LeftPart path={params.slug}/>
           </div>
           <div className="right w-full md:w-3/4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 gap-x-8">

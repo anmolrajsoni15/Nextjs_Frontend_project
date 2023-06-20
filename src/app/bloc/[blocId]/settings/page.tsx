@@ -1,5 +1,5 @@
 'use client'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Sidebar from '../../../components/dashboard/Sidebar'
 import Topbar from '../../../components/dashboard/Topbar'
@@ -8,12 +8,20 @@ import ProgressBar from '../../../components/dashboard/ProgressBar'
 import Button from '../../../components/dashboard/Button'
 import { getCookie } from 'cookies-next'
 import {useRouter} from 'next/navigation'
+import { useSelector,useDispatch } from 'react-redux'
+import { setBlocName,setBasePrompt, setSubHeading, setInitialMessage, setOpenAiModel, BlocState } from '../../../Redux/features/blocState'
+import { RootState } from '../../../Redux/store'
 
 const Settings = () => {
 
+
+    
+    const dispatch = useDispatch()
+    const blocState: BlocState = useSelector((store: RootState) => store.blocState)
+    const router = useRouter()
     const blocId = getCookie('blocId')
     const token = getCookie('jwt')
-    const router = useRouter();
+    
 
     interface DataState {
         name?: string;
@@ -25,7 +33,9 @@ const Settings = () => {
     }
 
     const [data, setData] = useState<DataState>({
+        
     });
+
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
@@ -48,6 +58,7 @@ const Settings = () => {
   
 
     const applySetting = async () => {
+
         
 
         if (typeof blocId == 'string') {
@@ -55,8 +66,11 @@ const Settings = () => {
 
                 const bodyData = JSON.stringify({
                     'name': data.name,
-                    'isPublic': true,
+                    'isPublic': false,
                     'basePrompt' : data.basePrompt,
+                    'subHeading':data.subheading,
+                    'initialMessage': data.initialMsg,
+                    // 'photo':data.image
                 })
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -74,7 +88,12 @@ const Settings = () => {
                 if(res.ok){
                     const result = await res.json();
                     console.log('Bloc-Patch: ',result)
-                    router.push(`/${blocId}`)
+                    router.push(`bloc/${blocId}`)
+                    dispatch(setBlocName(result.name))
+                    dispatch(setSubHeading(result.subHeading))
+                    dispatch(setBasePrompt(result.basePrompt))
+                    dispatch(setInitialMessage(result.initialMessage))
+                    dispatch(setOpenAiModel(result.openAiModel))
                 }
             }
             catch (error) {
@@ -87,26 +106,26 @@ const Settings = () => {
         <div className='text-white flex'>
             <Sidebar />
             <section className='px-8 '>
-                <Topbar text={'Create a New Bloc'} />
+                <Topbar text={'Settings'} />
                 <ProgressBar c1={'bg-primary'} c2={'bg-primary'} c3={'bg-primary'} c4='bg-white' />
                 <div className='pt-8'>
-                    <div className=' space-y-4'>
+                    <div className=' space-y-8'>
                         <div className='flex space-x-32'>
                             <h3 className='w-[280px]'>Name</h3>
                             <Input className={'w-[512px]'} placeholder={''} value={data.name} name='name' onChange={handleChange} />
                         </div>
-                        <hr />
-                        <div className='flex space-x-32'>
-                            <h3 className='w-[280px]'>Image</h3>
-                            {/* <Input className={'w-[512px]'} placeholder={''} /> */}
-                            <input className='cursor-pointer' type='file' onChange={handleChange} name={'image'} />
-                        </div>
-                        <hr />
+                        {/* <hr /> */}
+                        
                         <div className='flex space-x-32'>
                             <h3 className='w-[280px]'>Subheading</h3>
                             <Input className={'w-[512px]'} placeholder={''} onChange={handleChange} name='subheading' value={data.subheading} />
                         </div>
-                        <hr />
+                        {/* <hr /> */}
+                        <div className='flex space-x-32'>
+                            <h3 className='w-[280px]'>Image</h3>
+                            <input className='cursor-pointer' type='file' onChange={handleChange} name={'image'} />
+                        </div>
+                        {/* <hr /> */}
                         <div className='flex space-x-32 '>
                             <h3 className='w-[280px]'>Model</h3>
                             <div className='space-y-2'>
@@ -122,15 +141,15 @@ const Settings = () => {
                                 <div className='text-xs text-[#959595]'>This is a hint text to help user.</div>
                             </div>
                         </div>
-                        <hr />
+                        {/* <hr /> */}
                         <div className='flex space-x-32'>
                             <h3 className='w-[280px]'>Intial Message</h3>
                             <div className='space-y-2'>
                                 <Input className={'w-[512px]'} placeholder={''} value={data.initialMsg} name='initialMsg' onChange={handleChange} />
-                                <div className='text-xs text-muted'>Write each domain in a new line  i which u want bloc to be embedded on</div>
+                                <div className='text-xs text-muted'>Write each domain in a new line I which u want bloc to be embedded on</div>
                             </div>
                         </div>
-                        <hr />
+                        {/* <hr /> */}
                         <div className='flex space-x-32 '>
                             <h3 className='w-[280px]'>Base Prompt</h3>
                             <div className='space-y-2'>
@@ -140,7 +159,7 @@ const Settings = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex justify-start space-x-3 mt-10 '>
+                <div className='flex justify-center space-x-3 mt-10 '>
                   <Link href={`/bloc/${blocId}`}>  <Button text={'Cancel'} className={''} /></Link>
                     <Button text={'Apply'} onClick={applySetting} />
                 </div>

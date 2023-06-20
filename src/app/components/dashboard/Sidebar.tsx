@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { FormEvent, KeyboardEvent, useEffect, useState } from 'react'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
@@ -8,14 +8,43 @@ import { signOut } from 'firebase/auth'
 import { auth } from '../../Firebase/firebaseConfig'
 import ButtonWithIcon from './ButtonWithIcon'
 import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
+import Router from 'next/router'
+import { clearFiles } from 'src/app/Redux/features/UploadFile';
+import { clearMessage } from 'src/app/Redux/features/Message';
+
+const customStyles = {
+    content: {
+        top: '35%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        border: 'none',
+        padding: 'none',
+    }
+}
 
 
 
 const Sidebar = () => {
 
     const router = useRouter()
+    const dispatch = useDispatch();
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [credit, setCredit] = useState()
+    const [blocName, setBlocName] = React.useState('');
+    const [isCreatingBloc, setIsCreatingBloc] = useState(false); // Added state for button disable
+
+
+
+    const handleBlocName = (e: any) => {
+        setBlocName(e.target.value)
+    }
+
+
 
     function openModal() {
         setIsOpen(true);
@@ -32,16 +61,23 @@ const Sidebar = () => {
         deleteCookie('jwt')
         deleteCookie('chatId')
         router.push('/')
+        router.refresh()
+
+        // setTimeout(() => {
+        //     location.reload();
+        //   }, 100);
     }
 
     const createNewBloc = async () => {
-        
+
+        setIsCreatingBloc(true); // Disable the button
         const token = getCookie('jwt')
+
         const data = {
-            name: '',
+            name: blocName,
             photo: '',
-            initialMessage:'',
-            subHeading:'',
+            initialMessage: 'Hey, I am bloc! How can I help you?',
+            subHeading: '',
             isPublic: false
         }
         try {
@@ -63,13 +99,52 @@ const Sidebar = () => {
             console.log(result)
             localStorage.setItem("blocId", result.blocId)
             setCookie('blocId', result.blocId)
-
             router.push('/create')
+            dispatch(clearFiles())
+            dispatch(clearMessage())
         }
         catch (error) {
             console.log("There is a problem with your fetching operations: ", error)
         }
+        finally {
+            setIsCreatingBloc(false); // Enable the button
+        }
     }
+
+    // const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>): void => {
+    //     if (e.key === "Enter") {
+    //       e.preventDefault();
+    //       createNewBloc();
+    //     }
+    //   };
+
+    const getCredits = async () => {
+        const token = getCookie('jwt')
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/credits`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if (!res.ok) {
+            console.log('Network Response for the getCredits is not ok!')
+        }
+        if (res.ok) {
+            const result = await res.json()
+            setCredit(result.credits)
+        }
+
+    }
+
+    useEffect(() => {
+        getCredits()
+    }, [])
+
+    const goToDashboard =()=>{
+        router.push('/dashboard')
+        router.refresh()
+    }
+
+
     return (
         <section className={` w-[225px] flex-shrink-0 object-contain flex flex-col justify-between  border-r-2 py-6  top-0 sticky h-screen`}>
             <div className='px-6'>
@@ -83,32 +158,58 @@ const Sidebar = () => {
                             priority
                         />
                     </div>
-                    <div>
+                    <Link href={'/dashboard'} className='cursor-pointer' onClick={goToDashboard} >
                         <div className='text-2xl '>Bloc</div>
                         <p className='text-xs'>Share product upadates</p>
-                    </div>
+                    </Link>
                 </div>
                 <div className='text-center pt-8'>
-                    <div onClick={createNewBloc}>
+                    <div onClick={openModal}>
                         <ButtonWithIcon className={'px-8'} text={'New Bloc'} iconURL={'/dashboard/plus.svg'} imgAlt={'plus'} />
                     </div>
                 </div>
-                {/* <Modal
-                isOpen={modalIsOpen}
-                //   onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-            >
+                <Modal
+                    isOpen={modalIsOpen}
+                    //   onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >
+                    <form
+                        onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                            e.preventDefault();
+                            createNewBloc();
+                        }}
+                        className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-black text-white rounded-lg">
+                        <h1 className='text-center font-spacegrotesk font-bold text-5xl'>New  Bloc</h1>
+                        <div className='w-full'>
+                            <label htmlFor="" className='text-lg font-spacegrotesk font-medium text-[#e7e7e7] pl-1'>Name</label>
+                            <input
+                                type="text"
+                                value={blocName}
+                                placeholder='Name your Bloc'
+                                onChange={handleBlocName}
+                                className='bg-black border border-solid text-[#e1e1e1] border-slate-500 rounded-md px-2 py-1 
+                        font-spacegrotesk text-base font-normal focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-5 w-full h-10'
+                                required />
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-2/5 h-10 mt-4 bg-primary rounded-md border-none font-inter font-medium"
+                            disabled={isCreatingBloc} // Disable the button based on state
+                        >
+                            {isCreatingBloc ? 'Creating...' : 'Create'}
+                        </button>
 
-            </Modal> */}
+                    </form>
+                </Modal>
             </div>
             <div className='space-y-16'>
                 <div className='border-y-[1px] border-[#333333] py-2'>
                     <div className='flex px-6 space-x-4 items-center'>
-                        <div className='text-sm'>
+                        <div className='text-sm text-center'>
                             Tokens<br />
-                            10,000
+                            {credit}
                         </div>
                         <div>
                             <Link href={'#'}  >
@@ -118,18 +219,20 @@ const Sidebar = () => {
                     </div>
                 </div>
                 <div className='px-6 space-y-4'>
-                    <Link href={'#'} className='flex space-x-2'>
+                    <Link href={'/blog'} className='flex space-x-2' target='_blank'>
                         <span>Resources</span>
                     </Link>
-                    <Link href={'#'} className='flex space-x-2'>
+                    <Link href={'mailto:shrish@mysticlabs.ai'} className='flex space-x-2' target='_blank'>
                         <span>Support</span>
                     </Link>
-                    <button className='flex space-x-2 cursor-pointer' onClick={logout}>
+                    {/* <Link href={'/'} > */}
+                    <span className='flex space-x-2 cursor-pointer' onClick={logout}>
                         Log out
-                    </button>
+                    </span>
+                    {/* </Link> */}
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 

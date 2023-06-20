@@ -2,6 +2,7 @@
 
 import React from 'react'
 import BlogCard from './BlogCard'
+import Link from 'next/link'
 import { getPosts } from '../../lib/ghost-client'
 import { useState, useEffect } from 'react';
 import type { PostOrPage } from "@tryghost/content-api";

@@ -1,50 +1,37 @@
-// import React from 'react'
+'use client'
+import Link from 'next/link'
+import React from 'react'
+import Dropdown from './Dropdown'
+import {  setCookie } from 'cookies-next'
+import { clearFiles } from 'src/app/Redux/features/UploadFile'
+import { clearMessage } from 'src/app/Redux/features/Message'
+import { useDispatch } from 'react-redux'
+
+function BlocList({key,name,blocId,createdAt,refreshedAt}:any) {
 
 
+  const dispatch = useDispatch()
 
 
-// async function BlocList() {
+  const handleClick=()=>{
+    setCookie('blocId',blocId)
+    dispatch(clearFiles())
+    dispatch(clearMessage())
+  }
+
+  return (
     
+<tr key={key} className=' border-y-[1px] border-borderColor  hover:text-white ' onClick={handleClick} >
+<td className='py-2 px-2 hover:text-white '><Link href={`/bloc/${blocId}`}>{name}</Link></td>
+<td className=''>{createdAt}</td>
+<td>{refreshedAt}</td>
+<td className='px-4'>
+  <Dropdown blocId={blocId} />
+</td>
 
+</tr>
+    
+  )
+}
 
-//     const blocs = await getBlocs()
-
-//     // const blocs=[
-//     //     {
-//     //         bloc_name: 'abc',
-//     //         upload_date:'12-feb-2024',
-//     //         last_update:'22-feb-2021',
-//     //     },
-       
-//     // ]
-
-
-//     return (
-//         <div>
-//             <table className="table-fixed w-[100%] text-center ">
-//                 <thead className='border-[1px] border-borderColor rounded-[5px]'>
-//                     <tr>
-//                         <th>BLOC NAME</th>
-//                         <th>DATE UPLOADED</th>
-//                         <th>LAST UPDATES</th>
-//                         <th></th>
-//                     </tr>
-//                 </thead>
-//                 <tbody className='divide-y-[1px]'>
-
-//                     {blocs.map((item,index)=>{
-//                         return( <tr key={index}>
-//                         <td>{item.name}</td>
-//                         {/* <td>{item.upload_date}</td> */}
-//                         {/* <td>{item.last_update}</td> */}
-//                         <td></td>
-//                     </tr>)
-//                     })
-//                         }
-//                 </tbody>
-//             </table>
-//         </div>
-//     )
-// }
-
-// export default BlocList
+export default BlocList

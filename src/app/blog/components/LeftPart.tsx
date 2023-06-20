@@ -31,7 +31,7 @@ const LeftPart = ({path}:{path:string}) => {
             </li>
           </Link>
             {
-              allTags?.slice(0, numTagsToShow).map(item => {
+              allTags?.slice(0, numTagsToShow).map((item,index) => {
                 return (
                   <Link href={`/blog/tags/${item.slug}`} key={item?.id || 'x'}>
                     <li

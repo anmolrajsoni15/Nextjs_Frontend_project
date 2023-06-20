@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import NavHeader from '../NavHeader'
 import Image from 'next/image'
+import LoginButton from '../LoginButton'
 
 const Navbar = () => {
 
@@ -46,20 +47,8 @@ const Navbar = () => {
                                 })
                             }
                         </ul>
-                        <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
-                        <div  className="my-4 border rounded-full py-2 w-fit md:px-6 px-4 md:w-fit w-[100%] justify-center
-                         flex flex-row items-center bg-[#28A1FF] border-gray-600 hover:border-[#28A1FF] cursor-pointer">
-                            {/* <div className="h-6 w-6 sm:w-8 sm:h-8 relative">
-                                <Image src="landing_images/google.svg"
-                                    alt="Google Logo"
-                                    className='object-cover'
-                                    fill
-                                />
-                            </div>
-                            <div className="sm:w-4 w-2">  </div> */}
-                            <div className="sm:font-medium text-md text-black" > Join the Waitlist </div>
-                        </div>
-                        </Link>
+                        
+                        <LoginButton text={'Continue with Google'} />
                     </div>
                 </div>
             </nav>

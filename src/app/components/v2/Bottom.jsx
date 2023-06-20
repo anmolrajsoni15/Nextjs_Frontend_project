@@ -20,7 +20,7 @@ function Bottom() {
               last 20 people who joined our community. Let&apos;s move towards
               success together!
             </p>
-            <Button>Join the Waitlist</Button>
+            <Button text={'Join the Waitlist'} />
           </div>
         </div>
         <div className="md:w-full lg:w-[52%] xl:w-[45%] mx-auto hidden md:block">

@@ -39,6 +39,8 @@ export interface InputProps {
   export interface Bloclist{
     blocId:string
     name:string
+    createdAt:string
+    refreshedAt:string
   }
 
   export interface Params{

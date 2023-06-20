@@ -12,7 +12,6 @@ const UploadFileCard = () => {
 
     const dispatch = useDispatch()
     const selectFile = useRef<HTMLInputElement>(null);
-    // const [percent, setPercent] = useState(0)
 
     const handleClick = () => {
         selectFile.current?.click()
@@ -65,7 +64,7 @@ const UploadFileCard = () => {
             <Image src={'/dashboard/upload.svg'} width={40} height={40} alt='upload' />
             <div>Click to upload or drag or drop</div>
             <div>PDF, .txt, word etc</div>
-            <input type='file' ref={selectFile} onChange={handleChange} hidden />
+            <input type='file' ref={selectFile} onChange={handleChange} accept='.pdf,.ppt,.docx,.txt,.md' hidden />
 
         </div>
     )

@@ -1,6 +1,4 @@
 'use client'
-import Image from 'next/image'
-import header from '../../../../public/images/blog_images/header.png'
 
 const Header = () => {
   return (

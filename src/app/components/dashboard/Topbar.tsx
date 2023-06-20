@@ -2,7 +2,7 @@
 import React from 'react'
 import Progress from '@geist-ui/core/esm/progress'
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from 'src/app/Firebase/firebaseConfig';
+import { auth } from '../../Firebase/firebaseConfig';
 import ProgressBar from './ProgressBar'
 
 interface Props {
@@ -18,9 +18,9 @@ const Topbar = ({ text }: Props) => {
 
   return (
     <>
-    <div className=' w-[76vw] flex justify-between py-5 '>
+    <div className=' w-[80vw] flex justify-between py-5 '>
         <h1 className='text-5xl font-bold'>{text}</h1>
-        <div className='px-4'>
+        <div className=''>
             <span>{user?.email}</span>
             {/* <div>photo</div> */}
         </div>
