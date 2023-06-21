@@ -14,13 +14,13 @@ const AddWeb = () => {
                 <h2 className='text-xl font-semibold'>Add the URL</h2>
                 <AddUrl />
             </div>
-            <div className='space-y-1'>
+            {/* <div className='space-y-1'>
                 <h2 className='text-xl'>Associated Links</h2>
                 <div className='flex space-x-4'>
                     <Input className={'w-[844px]'} placeholder={''} />
                     <Image src={'/dashboard/cross.svg'} className={`cursor-pointer`} height={24} width={24} alt={'cross'} />
                 </div>
-            </div>
+            </div> */}
         </section>
     )
 }

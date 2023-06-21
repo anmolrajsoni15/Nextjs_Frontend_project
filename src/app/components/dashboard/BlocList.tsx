@@ -3,8 +3,8 @@ import Link from 'next/link'
 import React from 'react'
 import Dropdown from './Dropdown'
 import {  setCookie } from 'cookies-next'
-import { clearFiles } from 'src/app/Redux/features/UploadFile'
-import { clearMessage } from 'src/app/Redux/features/Message'
+import { clearFiles } from '../../Redux/features/UploadFile'
+import { clearMessage } from '../../Redux/features/Message'
 import { useDispatch } from 'react-redux'
 
 function BlocList({key,name,blocId,createdAt,refreshedAt}:any) {

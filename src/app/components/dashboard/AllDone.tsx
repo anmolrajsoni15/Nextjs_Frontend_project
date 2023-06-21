@@ -5,8 +5,8 @@ import Button from './Button'
 import { deleteCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { clearFiles } from 'src/app/Redux/features/UploadFile'
-import { clearMessage } from 'src/app/Redux/features/Message'
+import { clearFiles } from '../../Redux/features/UploadFile'
+import { clearMessage } from '../../Redux/features/Message'
 
 function AllDone() {
 

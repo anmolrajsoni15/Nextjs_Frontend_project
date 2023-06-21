@@ -7,8 +7,6 @@ import Modal from 'react-modal';
 import Image from 'next/image'
 import QRCode from "react-qr-code";
 import {
-    TwitterShareButton,
-    LinkedinShareButton,
     WhatsappShareButton,
     EmailShareButton
 } from "next-share";   

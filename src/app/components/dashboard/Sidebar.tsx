@@ -10,8 +10,8 @@ import ButtonWithIcon from './ButtonWithIcon'
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 import Router from 'next/router'
-import { clearFiles } from 'src/app/Redux/features/UploadFile';
-import { clearMessage } from 'src/app/Redux/features/Message';
+import { clearFiles } from '../../Redux/features/UploadFile';
+import { clearMessage } from '../../Redux/features/Message';
 
 const customStyles = {
     content: {
