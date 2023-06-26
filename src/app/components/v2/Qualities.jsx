@@ -76,12 +76,14 @@ function Qualities() {
       setColumnCount(getColumnCount());
     };
 
-    window.addEventListener("resize", handleWindowResize);
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", handleWindowResize);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", handleWindowResize);
+      };
+    }
   }, []);
 
   function getColumnCount() {
