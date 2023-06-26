@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import Subcomp from "./Subcomp";
 import icon1 from "../../../../public/icons/icon1.png";
 import icon2 from "../../../../public/icons/icon2.png";
@@ -16,41 +16,42 @@ function Qualities() {
       icon: icon1,
       title: "Natural language processing (NLP)",
       desc:
-        "questions in plain language and quickly find the information they need from uploaded knowledge base.",
+        "Questions in plain language and quickly find the information they need from the uploaded knowledge base.",
     },
     {
       icon: icon2,
       title: "Flexible document and file uploads",
       desc:
-        "Bloc allows users to upload a wide variety of file types, including slack, google documents, spreadsheets.",
+        "Bloc allows users to upload a wide variety of file types, including Slack, Google Documents, spreadsheets.",
     },
     {
       icon: icon3,
       title: "Integrations with your favorite apps",
       desc:
-        "Bloc can be integrated with a lot of apps, so you never miss anything. Notion, Google Drive, Figma and slack we have it all.",
+        "Bloc can be integrated with a lot of apps, so you never miss anything. Notion, Google Drive, Figma, and Slack, we have it all.",
     },
     {
       icon: icon4,
       title: "Powerful search",
       desc:
-        "questions in plain language and quickly find the information they need from uploaded knowledge base.",
+        "Questions in plain language and quickly find the information they need from the uploaded knowledge base.",
     },
     {
       icon: icon5,
       title: "Collaboration",
       desc:
-        "Deliver dynamic, personalized content, while ensuring users only see the best version of your site.",
+        "Deliver dynamic, personalized content while ensuring users only see the best version of your site.",
     },
     {
       icon: icon6,
       title: "Integrations with your favorite apps",
       desc:
-        "Bloc can be integrated with a lot of apps, so you never miss anything. Notion, Google Drive, Figma and slack we have it all.",
+        "Bloc can be integrated with a lot of apps, so you never miss anything. Notion, Google Drive, Figma, and Slack, we have it all.",
     },
   ];
 
-  const [columnCount, setColumnCount] = useState(getColumnCount());
+  const [columnCount, setColumnCount] = useState(1);
+  const containerRef = useRef(null);
 
   const getBorderRadiusStyles = (index, length, columns) => {
     if (columns === 1) {
@@ -71,39 +72,45 @@ function Qualities() {
     return "";
   };
 
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setColumnCount(getColumnCount());
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        let columns;
+
+        if (containerWidth <= 765) {
+          columns = 1;
+        } else if (containerWidth < 1025 && containerWidth > 765) {
+          columns = 2;
+        } else if (containerWidth >= 1025) {
+          columns = 3;
+        }
+
+        setColumnCount(columns);
+      }
     };
 
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleWindowResize);
+    handleResize();
 
-      // Cleanup the event listener on component unmount
-      return () => {
-        window.removeEventListener("resize", handleWindowResize);
-      };
+    const resizeObserver = new ResizeObserver(handleResize);
+    const containerElement = containerRef.current;
+
+    if (containerElement) {
+      resizeObserver.observe(containerElement);
     }
+
+    return () => {
+      if (containerElement) {
+        resizeObserver.unobserve(containerElement);
+      }
+    };
   }, []);
 
-  function getColumnCount() {
-    if (typeof window !== "undefined") {
-      const windowWidth = window.innerWidth;
-
-      if (windowWidth <= 766) {
-        return 1;
-      } else if (windowWidth < 1025 && windowWidth > 766) {
-        return 2;
-      } else if (windowWidth >= 1025) {
-        return 3;
-      }
-    }
-    return 1; 
-  }
-
-
   return (
-    <div className="w-5/6 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mb-16 md:gap-x-0 lg:gap-y-10 lg:gap-x-0">
+    <div
+      className="w-5/6 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mb-16 md:gap-x-0 lg:gap-y-10 lg:gap-x-0"
+      ref={containerRef}
+    >
       {qualities.map((quality, index) => (
         <div
           key={index}
@@ -125,3 +132,4 @@ function Qualities() {
 }
 
 export default Qualities;
+
