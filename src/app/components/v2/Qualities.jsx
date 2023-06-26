@@ -87,15 +87,18 @@ function Qualities() {
   }, []);
 
   function getColumnCount() {
-    const windowWidth = window.innerWidth;
+    if (typeof window !== "undefined") {
+      const windowWidth = window.innerWidth;
 
-    if (windowWidth <= 766) {
-      return 1; 
-    } else if (windowWidth < 1025 && windowWidth > 766) {
-      return 2; 
-    } else if(windowWidth >= 1025) {
-      return 3; 
+      if (windowWidth <= 766) {
+        return 1;
+      } else if (windowWidth < 1025 && windowWidth > 766) {
+        return 2;
+      } else if (windowWidth >= 1025) {
+        return 3;
+      }
     }
+    return 1; 
   }
 
 
