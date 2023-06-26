@@ -19,6 +19,7 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'header-image': "url('/images/blog_images/header.png')",
+        'frame': "url('/images/Frame.png')"
       },
       colors:{
         'borderColor':'#333333',

@@ -1,5 +1,6 @@
 import LayoutEffect from "../../LayoutEffect"
 import SectionWrapper from "../../SectionWrapper"
+import GradientWrapper from "../../GradientWrapper"
 
 const faqsList = [
     // {
@@ -56,15 +57,16 @@ const faqsList = [
 const FAQs = () => (
     <SectionWrapper id="faqs">
         <div className="custom-screen text-gray-300">
-            <div className="max-w-xl text-center xl:mx-auto">
-                <h2 className="text-3xl text-white font-semibold sm:text-4xl">
+            <div className="max-w-xl text-center mx-auto">
+                <h2 className="text-3xl text-white font-semibold font-poppins leading-[44px] sm:text-4xl">
                     Everything you need to know.
                 </h2>
 
-                <p className=" mt-3">
+                <p className=" mt-3 text-lg font-spacegrotesk font-medium">
                     Here are the most questions people always ask about.
                 </p>
             </div>
+            <GradientWrapper wrapperClassName="max-w-xl h-16 top-[45%] inset-x-0" className="h-fit">
             <div className='mt-12'>
                 <LayoutEffect
                     className="duration-1000 delay-300"
@@ -73,25 +75,26 @@ const FAQs = () => (
                         falseState: "opacity-0 translate-y-12"
                     }}
                 >
-                    <ul className='space-y-8 gap-12 grid-cols-2 sm:grid sm:space-y-0 lg:grid-cols-3'>
+                    <ul className='space-y-8 gap-12 grid-cols-2 sm:grid sm:space-y-0 lg:grid-cols-3 w-11/12 mx-auto'>
                         {faqsList.map((item, idx) => (
                             <li
                                 key={idx}
-                                className="space-y-3 p-5 rounded-md hover:bg-slate-900 hover:shadow-xl hover:shadow-slate-800 transition duration-300 ease-in-out"
+                                className="space-y-3 p-5 rounded-md transition duration-300 ease-in-out"
                             >
                                 <summary
-                                    className="flex items-center justify-between font-semibold text-gray-100">
+                                    className="flex items-center justify-between font-semibold text-white font-poppins text-base">
                                     {item.q}
                                 </summary>
                                 <p
                                     dangerouslySetInnerHTML={{ __html: item.a }}
-                                    className='leading-relaxed'>
+                                    className='leading-relaxed text-[#666] text-base font-roboto'>
                                 </p>
                             </li>
                         ))}
                     </ul>
                 </LayoutEffect>
             </div>
+            </GradientWrapper>
         </div>
     </SectionWrapper>
 )

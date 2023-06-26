@@ -20,7 +20,7 @@ function Bottom() {
               last 20 people who joined our community. Let&apos;s move towards
               success together!
             </p>
-            <Button text={'Join the Waitlist'} />
+            <Button text={'Join the Waitlist'} classProperties="bg-[#0784C6] hover:bg-[#2793cd]" />
           </div>
         </div>
         <div className="md:w-full lg:w-[52%] xl:w-[45%] mx-auto hidden md:block">

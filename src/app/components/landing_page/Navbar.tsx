@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import logo from "../../../../public/images/logo.png";
 import Image from "next/image";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Button from "../common/Button";
+import Link from "next/link";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
@@ -15,7 +16,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="justify-between w-5/6 h-24 mx-auto bg-transparent hidden md:flex">
+      <div className="justify-between w-[86%] h-24 mx-auto bg-transparent hidden md:flex z-10 relative">
         <div className="flex flex-col pl-1 pt-5 w-16">
           <Image src={logo} alt="logo" />
           <span className="leading-6 font-roboto">Bloc</span>
@@ -29,7 +30,12 @@ function Navbar() {
           </ul>
         </div>
         <div className="h-full">
-          <Button text={'Join the WaitList'} className="my-5" />
+          <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
+            <Button
+              text={"Join the WaitList"}
+              classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
+            />
+          </Link>
         </div>
       </div>
       {/* Mobile Button */}
@@ -73,7 +79,12 @@ function Navbar() {
             </ul>
           </div>
           <div className="h-1/6">
-            <Button text={'Join the Waitlist'} />
+            <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
+              <Button
+                text={"Join the WaitList"}
+                classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
+              />
+            </Link>
           </div>
         </div>
       </div>

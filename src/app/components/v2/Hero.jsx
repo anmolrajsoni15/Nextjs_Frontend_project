@@ -18,7 +18,7 @@ function Hero() {
               <span className="text-[#36C5F0]">Just a question</span> away.
             </div>
             <div className="flex items-center w-full md:w-[110%] lg:w-[85%] lg:max-w-[480px] my-6">
-              <p className="text-sm text-center md:text-xl md:text-left leading-[30px] font-space-grotesk">
+              <p className="text-sm text-center md:text-xl md:text-left leading-[30px] font-spacegrotesk">
                 An AI tool that allows you to extract data from your multitude
                 of resources through simple questions, so that you can focus on
                 what&apos;s really important - your work.
@@ -26,7 +26,7 @@ function Hero() {
             </div>
             <div>
               <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
-              <Button text={'Join the Waitlist'}/>
+              <Button text={'Join the Waitlist'} classProperties="bg-[#1C1C1C] hover:border-[#ffffffa3]"/>
               </Link>
             </div>
           </div>

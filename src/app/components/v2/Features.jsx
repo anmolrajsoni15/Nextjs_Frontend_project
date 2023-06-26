@@ -78,7 +78,7 @@ function Features() {
             Join the Communication Revolution Between Teams with Bloc
           </div>
           <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
-            <button className="w-40 h-12 md:w-52 md:h-14 lg:w-44 lg:h-14 bg-[#1C1C1C] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
+            <button className="w-40 h-12 md:w-52 md:h-14 lg:w-44 lg:h-14 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
               Join the Waitlist
             </button>
           </Link>

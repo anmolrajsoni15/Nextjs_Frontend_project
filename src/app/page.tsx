@@ -9,7 +9,9 @@ import Hero from './components/v2/Hero';
 import Middle from './components/v2/Middle';
 import Features from './components/v2/Features';
 import Team from './components/ui/Team';
-import Navbar from "./components/ui/Navbar/Navbar";
+// import Navbar from "./components/ui/Navbar/Navbar";
+import Navbar from "./components/landing_page/Navbar"
+import Footer from "./components/ui/Footer/Footer";
 
 export default function Home() {
   return (
@@ -22,6 +24,7 @@ export default function Home() {
       <FAQs />
       {/* <Globe /> */}
       <Team />
+      <Footer />
 
     </div>
   );
