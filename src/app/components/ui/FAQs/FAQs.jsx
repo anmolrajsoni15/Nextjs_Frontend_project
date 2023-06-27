@@ -56,8 +56,8 @@ const faqsList = [
 
 const FAQs = () => (
     <SectionWrapper id="faqs">
-        <div className="custom-screen text-gray-300">
-            <div className="max-w-xl text-center mx-auto">
+        <div className="mx-auto w-[94%]">
+            <div className="w-4/5 text-center mx-auto">
                 <h2 className="text-3xl text-white font-semibold font-poppins leading-[44px] sm:text-4xl">
                     Everything you need to know.
                 </h2>

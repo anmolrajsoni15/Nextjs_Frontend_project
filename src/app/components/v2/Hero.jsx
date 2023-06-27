@@ -10,9 +10,9 @@ import Link from "next/link";
 function Hero() {
   return (
     <>
-      <div className="h-[150%] mb-14 lg:mb-0 md:h-fit md:mb-12 lg:h-full w-full flex items-center justify-center relative translate-y-8 lg:-translate-y-[15%]">
-        <div className="container w-11/12 h-full gap-0 md:gap-6 lg:gap-0 md:w-full lg:w-11/12 md:h-4/5 relative top-[35%] md:top-[10%] lg:top-16 flex flex-col md:flex-row justify-center items-center">
-          <div className="left flex flex-col w-full items-center md:items-start md:w-1/2 p-10 md:p-12 md:px-7 lg:p-16 px-5 lg:px-10">
+      <div className="h-[150%] mb-14 lg:mb-0 md:h-fit md:mb-12 lg:h-full mx-auto w-[86%] translate-y-8 lg:-translate-y-[15%]">
+        <div className="container mx-auto w-full h-full gap-0 md:gap-6 lg:gap-0 md:h-4/5 relative top-[35%] md:top-[10%] lg:top-16 flex flex-col md:flex-row justify-center md:justify-between items-center">
+          <div className="left flex flex-col max-w-[592px]  items-center md:items-start md:w-[60%] lg:w-full p-10 md:p-12 md:px-7 lg:p-16 px-0 lg:px-0">
             <div className="text-[33px] text-center font-bold font-poppins leading-tight md:text-left md:text-[2.5rem] md:leading-[50px] lg:leading-[70px] lg:text-5xl lg:max-w-[592px]">
               Everything your team needs to know{" "}
               <span className="text-[#36C5F0]">Just a question</span> away.
@@ -37,7 +37,7 @@ function Hero() {
             <Image
               src={HomeImg}
               alt="home"
-              className="relative block lg:hidden md:top-0 lg:top-[5%] lg:left-[8%] w-full max-w-[80%] lg:max-w-[90%] xl:max-w-[80%] rounded-full"
+              className="relative block lg:hidden md:top-0 lg:top-[5%] lg:left-[8%] w-4/5 md:w-full rounded-full"
             />
           </div>
         </div>
