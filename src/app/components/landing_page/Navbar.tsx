@@ -22,11 +22,19 @@ function Navbar() {
           <span className="leading-6 font-roboto">Bloc</span>
         </div>
         <div className="flex flex-row flex-1 justify-evenly">
-          <ul className="flex flex-row list-none text-center items-center md:w-1/2 lg:w-2/5 justify-evenly font-roboto text-sm">
-            <li>Features</li>
-            <li>Testimonials</li>
-            <li>FAQs</li>
-            <li>Solutions</li>
+          <ul className="flex scroll-smooth flex-row list-none text-center items-center md:w-1/2 lg:w-2/5 justify-evenly font-roboto text-sm">
+            <li>
+              <Link href="/#qualities">Features</Link>
+            </li>
+            <li>
+              <Link href="/#teams">Testimonials</Link>
+            </li>
+            <li>
+              <Link href="/#faqs">FAQs</Link>
+            </li>
+            <li>
+              <Link href="/blog">Resources</Link>
+            </li>
           </ul>
         </div>
         <div className="h-full">
@@ -73,9 +81,18 @@ function Navbar() {
           </div>
           <div className="flex flex-col justify-evenly h-4/6">
             <ul className="flex flex-col gap-10 list-none text-center items-center w-full justify-evenly font-roboto text-lg">
-              <li>Features</li>
-              <li>Testimonials</li>
-              <li>FAQs</li>
+            <li>
+              <Link href="/#qualities">Features</Link>
+            </li>
+            <li>
+              <Link href="/#teams">Testimonials</Link>
+            </li>
+            <li>
+              <Link href="/#faqs">FAQs</Link>
+            </li>
+            <li>
+              <Link href="/blog">Resources</Link>
+            </li>
             </ul>
           </div>
           <div className="h-1/6">

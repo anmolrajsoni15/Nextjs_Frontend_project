@@ -109,6 +109,7 @@ function Qualities() {
   return (
     <div
       className="w-5/6 grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mb-16 md:gap-x-0 lg:gap-y-10 lg:gap-x-0"
+      id="qualities"
       ref={containerRef}
     >
       {qualities.map((quality, index) => (

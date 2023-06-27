@@ -53,7 +53,7 @@ export default function App() {
   ];
 
   return (
-    <section className="py-10">
+    <section className="py-10" id="teams">
       <div className="max-w-[90%] mx-auto md:px-8">
         <div className="flex flex-col w-full items-center justify-center">
             <h3 className="text-center text-white text-3xl font-bold sm:text-4xl font-poppins ">
