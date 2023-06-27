@@ -12,7 +12,7 @@ import Button from "./Button";
 
 function Features() {
   return (
-    <div className="flex flex-col h-full gap-[75px] items-center mb-28">
+    <div className="flex flex-col h-full gap-[75px] items-center mb-28" id="features">
       <div className="flex flex-col w-11/12 text-center md:w-4/5 items-center justify-center gap-7 px-8">
         <p className="text-2xl text-center leading-7 md:text-[32px] md:leading-10 lg:leading-[44px] font-poppins font-semibold">
           Don&apos;t look across 10s of Documents, just ask.

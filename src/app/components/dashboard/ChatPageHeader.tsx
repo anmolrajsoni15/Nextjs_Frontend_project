@@ -29,7 +29,7 @@ function ChatPageHeader() {
 
 
     const blocId = getCookie('blocId')
-    const link = `https://baseURL/bloc/${blocId}`
+    const link = `https://app.askbloc.ai/bloc/${blocId}`
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 

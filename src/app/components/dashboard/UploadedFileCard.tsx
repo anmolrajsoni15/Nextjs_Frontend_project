@@ -1,13 +1,43 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { clearFile } from '../../Redux/features/UploadFile';
+import { getCookie } from 'cookies-next';
 
-const UploadedFileCard = ({ fileName, fileSize, percentCompleted }: any) => {
+const UploadedFileCard = ({ fileName, fileSize, percentCompleted,key }: any) => {
     const dispatch = useDispatch();
+    const token = getCookie('jwt')
+    const [loading, setLoading ] = useState(false)
+
+    const deleteFile = async ()=>{
+        setLoading(true)
+        try{
+            const res = await fetch(`${process.env.NEXT_BASE_URL}/v1/integration`,{
+                method:'DELETE',
+                headers:{
+                    authorization: `Bearer ${token}`,
+                    'INTEGRATION-ID ' : key 
+                }
+            })
+            if(!res.ok){
+                console.log('Network Response for deleting integration was not ok!')
+            }
+            if(res.ok){
+                 await res.json()
+                 dispatch(clearFile(fileName))
+            }
+        }
+        catch(err){
+            console.log('error in delete Integration API:',err)
+        }
+        finally{
+            setLoading(false)
+        }
+    }
 
     return (
-        <div className="w-[512px] rounded-[12px] border-[1px] border-borderColor hover:border-white hover:cursor-pointer flex flex-col p-4 space-y-2">
+        <div className="w-[512px] rounded-[12px] border-[1px] border-borderColor hover:border-white hover:cursor-pointer flex flex-col p-4 space-y-2 my-2">
             <div className="flex space-x-2">
                 <div>
                     <Image src="/dashboard/uploaded.svg" width={30} height={30} alt="file" />
@@ -16,12 +46,12 @@ const UploadedFileCard = ({ fileName, fileSize, percentCompleted }: any) => {
                     <div className='flex justify-between'>
                         <div className=''>
                             <div>{fileName}</div>
-                            <div>{fileSize} MB</div>
+                            {/* <div>{fileSize} MB</div> */}
                         </div>
                         {percentCompleted === 100 ?
-                            <div onClick={() => dispatch(clearFile(fileName))}>
-                                clear
-                            </div> :
+                            <button onClick={deleteFile} disabled={loading}>
+                               {loading? 'deleting...' : 'clear'}
+                            </button> :
                             <></>
                         }
 

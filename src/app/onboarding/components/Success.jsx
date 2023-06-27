@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Icon from "../images/Icon.png";
 import Button from "./Button";
@@ -32,8 +32,9 @@ const Success = () => {
   };
 
 
-  const [blocName, setBlocName] = React.useState('');
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [blocName, setBlocName] = useState('');
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isCreatingBloc, setIsCreatingBloc] = useState(false); // Added state for button disable
 
   const handleBlocName = (e) => {
     setBlocName(e.target.value)
@@ -49,13 +50,15 @@ const Success = () => {
 
   const createNewBloc = async () => {
 
+    setIsCreatingBloc(true); // Disable the button
     const token = getCookie('jwt')
+
     const data = {
       name: blocName,
       photo: '',
-      initialMessage: '',
+      initialMessage: 'Hey, I am bloc! How can I help you?',
       subHeading: '',
-      isPublic: false
+      isPublic: true
     }
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -105,14 +108,34 @@ const Success = () => {
             style={customStyles}
             contentLabel="Example Modal"
           >
-            <div className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-slate-900 text-white rounded-lg">
-              <h1 className='text-center font-spacegrotesk font-bold text-5xl'>New  Bloc</h1>
-              <div className='w-full'>
-                <label htmlFor="" className='text-lg font-spacegrotesk font-medium text-[#e7e7e7] pl-1'>Name</label>
-                <input type="text" value={blocName} placeholder='Name your Bloc' onChange={handleBlocName} className='bg-slate-700 border border-solid text-[#e1e1e1] border-slate-500 rounded-md px-2 py-1 font-spacegrotesk text-base font-normal focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-5 w-full h-10' />
-              </div>
-              <button onClick={createNewBloc} className='w-2/5 h-10 mt-4 bg-primary rounded-md border-none font-inter font-medium'>Create</button>
-            </div>
+             <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            createNewBloc();
+                        }}
+                        className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-[#181818] text-white rounded-lg">
+                        <h1 className='text-center font-spacegrotesk font-bold text-5xl'>New  Bloc</h1>
+                        <div className='w-full'>
+                            <label htmlFor="" className='text-lg font-spacegrotesk font-medium text-[#e7e7e7] pl-1'>Name</label>
+                            <input
+                                type="text"
+                                value={blocName}
+                                placeholder='Name your Bloc'
+                                onChange={handleBlocName}
+                                className='bg-[#292929] border border-solid text-[#e1e1e1] border-slate-500 rounded-md px-2 py-1 
+                        font-spacegrotesk text-base font-normal focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-5 w-full h-10'
+                                required />
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-2/5 h-10 mt-4 bg-primary rounded-md border-none font-inter font-medium"
+                            disabled={isCreatingBloc} // Disable the button based on state
+                        >
+                            {isCreatingBloc ? 'Creating...' : 'Create'}
+                        </button>
+
+                    </form>
+                
           </Modal>
         </div>
         <Link href='/dashboard'>  <div className="font-spacegrotesk font-medium text-sm leading-5 text-white cursor-pointer">

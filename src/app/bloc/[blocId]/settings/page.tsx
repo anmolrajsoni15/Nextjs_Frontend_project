@@ -16,6 +16,7 @@ import {
   setInitialMessage,
   setOpenAiModel,
   BlocState,
+  setIsPublic
 } from "../../../Redux/features/blocState";
 import { RootState } from "../../../Redux/store";
 
@@ -35,9 +36,11 @@ const Settings = () => {
     initialMsg?: string;
     basePrompt?: string;
     model?: string;
+    isPublic?: string;
   }
 
   const [data, setData] = useState<DataState>({});
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -59,15 +62,18 @@ const Settings = () => {
   };
 
   const applySetting = async () => {
+    setIsLoading(true)
     if (typeof blocId == "string") {
       try {
         const bodyData = JSON.stringify({
           name: data.name,
-          isPublic: false,
+          isPublic: data.isPublic=='true' ? true: false,
           basePrompt: data.basePrompt,
           subHeading: data.subheading,
           initialMessage: data.initialMsg,
-          // 'photo':data.image
+          openAiModel: data.model,
+          photo:'hello'
+          
         });
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -91,9 +97,13 @@ const Settings = () => {
           dispatch(setBasePrompt(result.basePrompt));
           dispatch(setInitialMessage(result.initialMessage));
           dispatch(setOpenAiModel(result.openAiModel));
+          dispatch(setIsPublic(result.isPublic))
         }
       } catch (error) {
         console.log("Error in patch bloc api: ", error);
+      }
+      finally{
+        setIsLoading(false)
       }
     }
   };
@@ -134,7 +144,7 @@ const Settings = () => {
               />
             </div>
             {/* <hr /> */}
-            <div className="flex space-x-32">
+            {/* <div className="flex space-x-32">
               <h3 className="w-[280px]">Image</h3>
               <input
                 className="cursor-pointer"
@@ -142,7 +152,7 @@ const Settings = () => {
                 onChange={handleChange}
                 name={"image"}
               />
-            </div>
+            </div> */}
             {/* <hr /> */}
             <div className="flex space-x-32 ">
               <h3 className="w-[280px]">Model</h3>
@@ -156,9 +166,9 @@ const Settings = () => {
                   <option value={"gpt3.5-turbo"}>GPT 3.5 Turbo</option>
                   <option value={"gpt4"}>GPT 4</option>
                 </select>
-                <div className="text-xs text-[#959595]">
+                {/* <div className="text-xs text-[#959595]">
                   This is a hint text to help user.
-                </div>
+                </div> */}
               </div>
             </div>
             {/* <hr /> */}
@@ -172,10 +182,10 @@ const Settings = () => {
                   name="initialMsg"
                   onChange={handleChange}
                 />
-                <div className="text-xs text-muted">
+                {/* <div className="text-xs text-muted">
                   Write each domain in a new line I which u want bloc to be
                   embedded on
-                </div>
+                </div> */}
               </div>
             </div>
             {/* <hr /> */}
@@ -189,19 +199,36 @@ const Settings = () => {
                   name="basePrompt"
                   onChange={handleChange}
                 />
-                <div className="text-xs text-[#959595]">
+                {/* <div className="text-xs text-[#959595]">
                   This is a hint text to help user.
-                </div>
+                </div> */}
+              </div>
+            </div>
+            <div className="flex space-x-32 ">
+              <h3 className="w-[280px]">Access</h3>
+              <div className="space-y-2">
+                <select
+                  className="bg-black border-[1px] border-borderColor rounded w-[512px] h-[40px] px-2"
+                  value={data.isPublic}
+                  onChange={handleChange}
+                  name="isPublic"
+                >
+                  <option value={"true"}>Public</option>
+                  <option value={"false"}>Private</option>
+                </select>
+                {/* <div className="text-xs text-[#959595]">
+                  This is a hint text to help user.
+                </div> */}
               </div>
             </div>
           </div>
         </div>
         <div className="flex justify-center space-x-3 mt-10 ">
-          <Link href={`/bloc/${blocId}`}>
-            {" "}
-            <Button text={"Cancel"} className={""} />
-          </Link>
-          <Button text={"Apply"} onClick={applySetting} />
+          {/* <Link href={`/bloc/${blocId}`}> */}
+         
+            <Button text={"Cancel"} className={""} disabled={isLoading} onClick={router.back} />
+          {/* </Link> */}
+          <Button text={isLoading? "Applying":"Apply"} onClick={applySetting} disabled={isLoading} />
         </div>
       </section>
     </div>

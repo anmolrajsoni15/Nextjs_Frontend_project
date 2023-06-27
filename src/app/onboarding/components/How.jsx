@@ -89,6 +89,7 @@ const How = ({ incrementCnt }) => {
           ))}
         </div>
       </div>
+      
       <div className='cursor-pointer font-spacegrotesk text-sm leading-5 font-medium text-[#94D0FF]' onClick={() => handleClicks(undefined)}>Skip for later</div>
     </>
   );

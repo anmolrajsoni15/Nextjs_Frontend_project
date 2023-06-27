@@ -2,6 +2,7 @@ export interface ButtonProps {
     className?: string;
     text: string;
     onClick?:(e:React.MouseEvent<HTMLButtonElement>)=>void;
+    disabled?: boolean
   }
 
 export interface ButtonWithIconProps{

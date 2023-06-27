@@ -14,11 +14,11 @@ function Input({ icon, value, editable, onKeyPress, onChange }) {
   };
 
   return (
-    <div className="w-full h-14 md:h-[50px] my-2 flex flex-row justify-start items-center border-2 border-solid border-[#ffffff2f] rounded-md bg-[#292929] hover:bg-[#363636]">
+    <div className="w-full h-14 md:h-[50px] my-4 flex flex-row justify-start items-center border-2 border-solid border-[#ffffff2f] rounded-md bg-[#292929] hover:bg-[#363636]">
       <div className="icons w-[20%] text-[#f3f3f3cc] flex items-center justify-center">
         {icon}
       </div>
-      <div className="w-[80%] text-[13px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
+      <div className="w-[80%] text-[15px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
         {/* {value} */}
         <input
           type="text"

@@ -6,6 +6,7 @@ import HomeImg from "../../../../public/images/home.png";
 import Button from "./Button";
 import RotImg from "../RotatingImg/RotImg";
 import Link from "next/link";
+import LoginButton from "../ui/LoginButton";
 
 function Hero() {
   return (
@@ -25,9 +26,10 @@ function Hero() {
               </p>
             </div>
             <div>
-              <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
+              {/* <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
               <Button text={'Join the Waitlist'} classProperties="bg-[#1C1C1C] hover:border-[#ffffffa3]"/>
-              </Link>
+              </Link> */}
+              <LoginButton text={'Continue with Google'} />
             </div>
           </div>
           <div className="right w-full md:w-1/2 flex items-center justify-center md:justify-center md:items-center lg:items-center lg:justify-start">

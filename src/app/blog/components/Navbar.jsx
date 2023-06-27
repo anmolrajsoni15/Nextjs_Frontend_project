@@ -22,11 +22,11 @@ function Navbar() {
           <span className="leading-6 font-roboto">Bloc</span>
         </div>
         <div className="flex flex-row flex-1 justify-evenly">
-          <ul className="flex flex-row list-none text-center items-center md:w-1/2 lg:w-2/6 justify-evenly font-roboto text-sm">
+          {/* <ul className="flex flex-row list-none text-center items-center md:w-1/2 lg:w-2/6 justify-evenly font-roboto text-sm">
             <li>Features</li>
             <li>Testimonials</li>
             <li>FAQs</li>
-          </ul>
+          </ul> */}
         </div>
         <div className="h-full">
           <Button text={"Join the Waitlist"} />

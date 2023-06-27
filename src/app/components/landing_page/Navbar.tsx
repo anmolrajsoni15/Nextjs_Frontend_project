@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import logo from "../../../../public/images/logo.png";
 import Image from "next/image";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Button from "../common/Button";
 import Link from "next/link";
+import LoginButton from "../../components/ui/LoginButton";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
@@ -18,7 +18,7 @@ function Navbar() {
     <>
       <div className="justify-between w-[86%] h-24 mx-auto bg-transparent hidden md:flex z-10 relative">
         <div className="flex flex-col pl-1 pt-5 w-16">
-          <Image src={logo} alt="logo" />
+          <Image src='/images/logo.png' alt="logo" width={45} height={45} />
           <span className="leading-6 font-roboto">Bloc</span>
         </div>
         <div className="flex flex-row flex-1 justify-evenly">
@@ -38,19 +38,20 @@ function Navbar() {
           </ul>
         </div>
         <div className="h-full">
-          <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
+          {/* <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
             <Button
               text={"Join the WaitList"}
               classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
             />
-          </Link>
+          </Link> */}
+          <LoginButton text={'Continue with Google'} />
         </div>
       </div>
       {/* Mobile Button */}
       <div className="flex md:hidden flex-row w-full z-10 fixed bg-transparent backdrop-blur-sm">
         <div className="flex flex-row w-full items-center justify-between h-12">
           <div className="flex flex-row items-center justify-around w-1/3">
-            <Image src={logo} alt="logo" className="ml-4" />
+            <Image src='/images/logo.png' alt="logo" width={45} height={45} className="ml-4" />
             <span className="text-2xl leading-6 font-roboto -translate-x-2">
               Bloc
             </span>
@@ -74,7 +75,7 @@ function Navbar() {
           }
         >
           <div className="flex flex-col w-full items-center gap-2 justify-center h-1/6">
-            <Image src={logo} width={50} height={50} alt="logo" />
+            <Image src='/images/logo.png' width={45} height={45} alt="logo" />
             <span className="text-xl font-semibold leading-10 font-roboto">
               Bloc
             </span>
@@ -95,13 +96,14 @@ function Navbar() {
             </li>
             </ul>
           </div>
-          <div className="h-1/6">
-            <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
+          <div className="h-1/6 w-11/12">
+            {/* <Link href={"https://nsbxei0ai38.typeform.com/to/fd3UK76K"}>
               <Button
                 text={"Join the WaitList"}
                 classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
               />
-            </Link>
+            </Link> */}
+            <LoginButton text={'Continue with Google'} />
           </div>
         </div>
       </div>

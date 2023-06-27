@@ -7,15 +7,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCookie } from 'cookies-next'
 import axios from 'axios'
 import { setPercentCompleted } from '../../Redux/features/UploadFile'
+import { useRouter } from 'next/navigation'
 
 const UploadFileCard = () => {
 
+    
     const dispatch = useDispatch()
     const selectFile = useRef<HTMLInputElement>(null);
+    const router = useRouter()
 
     const handleClick = () => {
         selectFile.current?.click()
     }
+
     const handleChange = async (e: any) => {
         const fileUpload = {
             file: e.target.files[0],
@@ -49,6 +53,8 @@ const UploadFileCard = () => {
                 }
                 const result = await res.data;
                 console.log(result);
+                router.refresh()
+                
             }
             catch (error) {
                 console.error("There has been a problem within your fetch operations:", error)

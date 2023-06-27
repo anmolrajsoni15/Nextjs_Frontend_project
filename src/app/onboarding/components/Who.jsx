@@ -71,7 +71,7 @@ function Who({ incrementCnt }) {
 
   return (
     <>
-      <div className="sm:w-11/12 md:w-11/12 lg:w-1/2 m-5 p-8 md:p-4 md:py-4 lg:p-16 lg:py-4 bg-[#181818] flex gap-5 flex-col border-2 border-solid rounded-md border-[#ffffff2f]">
+      <div className="sm:w-11/12 md:w-11/12 lg:w-1/2 m-5 p-8 md:p-4 md:py-4 lg:p-16 lg:py-16 bg-[#181818] flex gap-5 flex-col border-2 border-solid rounded-md border-[#ffffff2f]">
         <div className="w-full font-spacegrotesk text-2xl leading-9 font-medium tracking-[-0.03em] text-white">
           Let&apos;s setup your account
         </div>

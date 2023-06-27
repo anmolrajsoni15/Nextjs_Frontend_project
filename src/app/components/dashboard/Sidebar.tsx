@@ -39,6 +39,7 @@ const Sidebar = () => {
     const [credit, setCredit] = useState()
     const [blocName, setBlocName] = React.useState('');
     const [isCreatingBloc, setIsCreatingBloc] = useState(false); // Added state for button disable
+    const [loadingLogout, setLoadingLogout] = useState(false)
 
 
 
@@ -57,6 +58,7 @@ const Sidebar = () => {
     }
 
     const logout = async () => {
+        await setLoadingLogout(true)
         await signOut(auth)
         deleteCookie('user')
         deleteCookie('blocId')
@@ -64,6 +66,7 @@ const Sidebar = () => {
         deleteCookie('chatId')
         router.push('/')
         router.refresh()
+        await setLoadingLogout(false)
 
         // setTimeout(() => {
         //     location.reload();
@@ -80,7 +83,7 @@ const Sidebar = () => {
             photo: '',
             initialMessage: 'Hey, I am bloc! How can I help you?',
             subHeading: '',
-            isPublic: false
+            isPublic: true
         }
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -121,27 +124,31 @@ const Sidebar = () => {
     //   };
 
     const getCredits = async () => {
-        const token = getCookie('jwt')
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/credits`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        try {
+            const token = getCookie('jwt')
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/credits`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (!res.ok) {
+                console.log('Network Response for the getCredits is not ok!')
             }
-        })
-        if (!res.ok) {
-            console.log('Network Response for the getCredits is not ok!')
+            if (res.ok) {
+                const result = await res.json()
+                setCredit(result.credits)
+            }
         }
-        if (res.ok) {
-            const result = await res.json()
-            setCredit(result.credits)
+        catch (err) {
+            console.log('There is an error in getCredits api: ',err)
         }
-
     }
 
     useEffect(() => {
         getCredits()
     }, [])
 
-    const goToDashboard =()=>{
+    const goToDashboard = () => {
         router.push('/dashboard')
         router.refresh()
     }
@@ -175,7 +182,7 @@ const Sidebar = () => {
                     //   onAfterOpen={afterOpenModal}
                     onRequestClose={closeModal}
                     style={customStyles}
-                    contentLabel="Example Modal"
+                    contentLabel="Bloc Name"
                 >
                     <form
                         onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -228,9 +235,9 @@ const Sidebar = () => {
                         <span>Support</span>
                     </Link>
                     {/* <Link href={'/'} > */}
-                    <span className='flex space-x-2 cursor-pointer' onClick={logout}>
-                        Log out
-                    </span>
+                    <button className='flex space-x-2 cursor-pointer' onClick={logout} disabled={loadingLogout}>
+                        {loadingLogout ? "Logging out..." : "Log out"}
+                    </button>
                     {/* </Link> */}
                 </div>
             </div>

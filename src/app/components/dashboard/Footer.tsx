@@ -1,12 +1,12 @@
 'use client'
-import React from 'react'
+import React, { Suspense } from 'react'
 import Button from './Button'
 import { getCookie, setCookie } from 'cookies-next';
 import Link from 'next/link';
 
 // import { cookies } from 'next/headers'
 
-const Footer = () => {
+const Footer = ({hidden}:any) => {
 
   // const blocId = cookies().get('blocId')?.value
   const blocId = getCookie('blocId')
@@ -38,9 +38,11 @@ const Footer = () => {
 
   return (
     <section className='h-[110px]  flex items-center justify-center space-x-4 ' >
-      {/* <Link href={`/dataSource`}>
-        <Button className={`/bloc/${blocId}`} text={'Add more DataSources'} />
-      </Link> */}
+      <Suspense fallback='loading...'>
+      <Link href={`/create/dataSource`} className={hidden}>
+        <Button text={'Add more DataSources'} />
+      </Link>
+      </Suspense>
       <div onClick={getChatId}>
         <Link href={`/bloc/${blocId}`}>
           <Button className={''} text={'Test your Bloc'} />
