@@ -20,28 +20,9 @@ import {
 } from "../../../Redux/features/blocState";
 import { RootState } from "../../../Redux/store";
 
-import { cookies } from 'next/headers'
 
-const getBlocs = async (): Promise<any> => {
-  const token = cookies().get('jwt')?.value
 
-  console.log(token)
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache"
-   
-  })
-  if (!res.ok) {
-    console.log('Failed to fetch data', res.status)
-}
-  
-  return res.json()
-}
-
-const Settings = async() => {
-  const blocs = await getBlocs();
+const Settings = () => {
 
   const dispatch = useDispatch();
   const blocState: BlocState = useSelector(
@@ -50,6 +31,29 @@ const Settings = async() => {
   const router = useRouter();
   const blocId = getCookie("blocId");
   const token = getCookie("jwt");
+
+  const getBlocs = async () => {
+    const tokens = getCookie("jwt")
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
+      headers: {
+        Authorization: `Bearer ${tokens}`,
+      },
+      cache: "no-cache"
+     
+    })
+    if (!res.ok) {
+      console.log('Failed to fetch data', res.status)
+  }
+    
+    return res.json()
+  }
+  const [blocs, setBlocs] = useState<any>([])
+
+  useEffect(() => {
+    const resData =  getBlocs();
+    setBlocs(resData);
+  }
+  , [])
 
   interface DataState {
     name?: string;
