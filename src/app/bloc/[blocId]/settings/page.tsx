@@ -20,7 +20,29 @@ import {
 } from "../../../Redux/features/blocState";
 import { RootState } from "../../../Redux/store";
 
-const Settings = () => {
+import { cookies } from 'next/headers'
+
+const getBlocs = async (): Promise<any> => {
+  const token = cookies().get('jwt')?.value
+
+  console.log(token)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache"
+   
+  })
+  if (!res.ok) {
+    console.log('Failed to fetch data', res.status)
+}
+  
+  return res.json()
+}
+
+const Settings = async() => {
+  const blocs = await getBlocs();
+
   const dispatch = useDispatch();
   const blocState: BlocState = useSelector(
     (store: RootState) => store.blocState
@@ -121,6 +143,7 @@ const Settings = () => {
   };
 
   const getBloc = async () => {
+
     try {
         if (typeof blocId == 'string') {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -154,7 +177,7 @@ getBloc()
 
   return (
     <div className="text-white flex">
-      <Sidebar />
+      <Sidebar allBlocs={blocs} />
       <section className="px-8 ">
         <Topbar text={"Settings"} />
         <ProgressBar
@@ -208,6 +231,7 @@ getBloc()
                   value={data.model}
                   onChange={handleChange}
                   name="model"
+                  title="model"
                   placeholder={blocState.openAiModel}
                 >
                   <option value={"gpt3.5-turbo"}>GPT 3.5 Turbo</option>
@@ -259,7 +283,7 @@ getBloc()
                   value={data.isPublic}
                   onChange={handleChange}
                   name="isPublic"
-                  
+                  title="isPublic"
                 >
                   <option value={"true"}>Public</option>
                   <option value={"false"}>Private</option>

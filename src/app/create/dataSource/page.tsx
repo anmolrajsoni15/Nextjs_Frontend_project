@@ -11,6 +11,24 @@ import AddUrl from '../../components/dashboard/AddUrl'
 import { cookies } from 'next/headers'
 import AddedUrl from '../../components/dashboard/AddedUrl'
 
+const getBlocs = async (): Promise<any> => {
+    const token = cookies().get('jwt')?.value
+  
+    console.log(token)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-cache"
+     
+    })
+    if (!res.ok) {
+      console.log('Failed to fetch data', res.status)
+  }
+    
+    return res.json()
+  }
+
 const getIntegrations = async (): Promise<any> => {
     const token = cookies().get('jwt')?.value
     const blocId = cookies().get('blocId')?.value
@@ -34,13 +52,14 @@ const getIntegrations = async (): Promise<any> => {
 }
 
 const page = async () => {
+    const blocs = await getBlocs();
 
     const integrations = await getIntegrations()
     console.log('integration info', integrations)
 
     return (
         <div className='text-white flex'>
-            <Sidebar />
+            <Sidebar allBlocs={blocs} />
             <section className='px-8 flex flex-col justify-between w-[85vw] '>
                 <div className='space-y-4'>
                     <Topbar text={'New Bloc'} />

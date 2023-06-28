@@ -6,11 +6,31 @@ import Input from '../../../components/dashboard/Input'
 import ProgressBar from '../../../components/dashboard/ProgressBar'
 import SettingTopDiv from '../../../components/dashboard/SettingTopDiv'
 import EditChatbot from '../../../components/dashboard/EditChatbot'
+import { cookies } from 'next/headers'
 
-const settings = () => {
+const getBlocs = async (): Promise<any> => {
+  const token = cookies().get('jwt')?.value
+
+  console.log(token)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-cache"
+   
+  })
+  if (!res.ok) {
+    console.log('Failed to fetch data', res.status)
+}
+  
+  return res.json()
+}
+
+const settings = async() => {
+    const blocs = await getBlocs()
     return (
         <div className='text-white flex'>
-            <Sidebar />
+            <Sidebar allBlocs={blocs} />
             <section className='px-8 w-[85vw]'>
                 <Topbar text={'Create a New Bloc'} />
                 <ProgressBar c1={'bg-primary'} c2={'bg-primary'} c3={'bg-primary'} c4='bg-white' />
