@@ -1,7 +1,7 @@
 "use client";
 import React, {useState, useEffect} from "react";
 
-function Input({ icon, value, editable, onKeyPress, onChange }) {
+function Input({ icon, value, editable, onKeyPress, onChange,placeholder }) {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -23,9 +23,10 @@ function Input({ icon, value, editable, onKeyPress, onChange }) {
         <input
           type="text"
           value={inputValue}
-          className={`bg-transparent focus:border-none outline-none py-2 ${!editable ? "cursor-pointer w-full" : "w-4/5 border-b-2 border-solid border-zinc-500 pb-1"}`}
+          className={`bg-transparent  focus:border-none outline-none py-2 ${!editable ? "cursor-pointer w-full" : "w-4/5 border-b-2 border-solid border-zinc-500 pb-1"}`}
           readOnly={!editable}
           onChange={handleInputChange}
+          placeholder={placeholder}
           onKeyPress={onKeyPress}
         />
       </div>

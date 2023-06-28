@@ -18,6 +18,7 @@ const UploadFile = () => {
                         fileSize={Math.round(item.file.size / (1024 * 1024)*100)/100}
                         percentCompleted={item.percentCompleted}
                         key={index}
+                        hidden={'hidden'}
                     />
                 ))}
             </div>

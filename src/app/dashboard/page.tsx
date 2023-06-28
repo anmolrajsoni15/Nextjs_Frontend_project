@@ -21,8 +21,8 @@ const getBlocs = async (): Promise<Bloclist[]> => {
    
   })
   if (!res.ok) {
-    throw Error('Failed to fetch data')
-  }
+    console.log('Failed to fetch data', res.status)
+}
   
   return res.json()
 }

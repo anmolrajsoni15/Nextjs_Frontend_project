@@ -3,6 +3,7 @@
 import React, { useRef, useState } from 'react';
 import Input from './Input';
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined";
+import Button from './Button';
 
 const How = ({ incrementCnt }) => {
   const options = [
@@ -29,12 +30,13 @@ const How = ({ incrementCnt }) => {
     {
       icon: <WhatshotOutlinedIcon />,
       value: 'Employee policies',
-      editable: false
+      editable: false,
     },
     {
       icon: <WhatshotOutlinedIcon />,
-      value: 'Something else',
-      editable: true
+      value: '',
+      editable: true,
+      placeholder:'Something Else'
     },
   ];
 
@@ -76,6 +78,7 @@ const How = ({ incrementCnt }) => {
                 value={option.value}
                 editable={option.editable}
                 onChange={handleChange}
+                placeholder={option?.placeholder}
                 onKeyPress={(event) => {
                   if (index === options.length - 1) {
                     handleLastOptionKeyPress(event);
@@ -88,8 +91,11 @@ const How = ({ incrementCnt }) => {
             </div>
           ))}
         </div>
+        
       </div>
-      
+      <div className="w-3/5 md:w-1/5" onClick={handleClicks}>
+        <Button value="Next" />
+      </div>
       <div className='cursor-pointer font-spacegrotesk text-sm leading-5 font-medium text-[#94D0FF]' onClick={() => handleClicks(undefined)}>Skip for later</div>
     </>
   );

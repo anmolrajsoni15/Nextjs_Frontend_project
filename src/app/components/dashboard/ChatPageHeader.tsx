@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonWithIcon from './ButtonWithIcon'
 import { getCookie } from 'cookies-next'
 import Modal from 'react-modal';
@@ -9,7 +9,7 @@ import QRCode from "react-qr-code";
 import {
     WhatsappShareButton,
     EmailShareButton
-} from "next-share";   
+} from "next-share";
 
 
 const customStyles = {
@@ -32,6 +32,7 @@ function ChatPageHeader() {
     const link = `https://app.askbloc.ai/bloc/${blocId}`
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [copied, setCopied] = useState(false)
 
     function openModal() {
         setIsOpen(true);
@@ -43,7 +44,11 @@ function ChatPageHeader() {
 
 
     const copylink = (e: any) => {
+        setCopied(true)
         navigator.clipboard.writeText(link)
+        setTimeout(() => {
+            setCopied(false)
+        }, 3000);
     }
 
     return (
@@ -71,7 +76,13 @@ function ChatPageHeader() {
                         <p className='text-[#FCFCFD] font-inter font-medium text-sm py-1'>Everyone with this link will be able to interact with bloc</p>
                         <div className='border-[2px] w-full h-11 rounded-md bg-[#2A2A2D] border-[#484C56] flex justify-between items-center'>
                             <div className='p-2 text-white overflow-hidden text-xs font-spacegrotesk font-normal'>{link}</div>
-                            <div className='bg-primary w-10 h-full flex rounded-r justify-center cursor-pointer' onClick={copylink}><Image src='/dashboard/copy.svg' width={16} height={16} alt='copy' /></div>
+                            {copied ?
+                                <div className='bg-[#4CBB17] w-10 h-full flex rounded-r justify-center cursor-pointer'>
+                                    <Image src={'/dashboard/check.svg'} width={16} height={16} alt='copied' />
+                                </div>
+                                : <div className='bg-primary w-10 h-full flex rounded-r justify-center cursor-pointer' onClick={copylink}>
+                                    <Image src={'/dashboard/copy.svg'} width={16} height={16} alt='copy' />
+                                </div>}
                         </div>
                     </div>
                     <div>

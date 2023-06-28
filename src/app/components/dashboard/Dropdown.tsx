@@ -33,6 +33,8 @@ function Dropdown({ blocId }: any) {
 
     const [modalIsOpen, setIsOpen] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false)
+    const [copied, setCopied] = useState(false)
+
 
     function openModal() {
         setDropdownOpen(false)
@@ -45,7 +47,11 @@ function Dropdown({ blocId }: any) {
 
 
     const copylink = (e: any) => {
+        setCopied(true)
         navigator.clipboard.writeText(link)
+        setTimeout(() => {
+            setCopied(false)
+        }, 3000);
     }
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -104,6 +110,8 @@ function Dropdown({ blocId }: any) {
         }
     }
 
+    
+
 
 
     return (
@@ -154,7 +162,13 @@ function Dropdown({ blocId }: any) {
                             <p className='text-[#FCFCFD] font-inter font-medium text-sm py-1'>Everyone with this link will be able to interact with bloc</p>
                             <div className='border-[2px] w-full h-11 rounded-md bg-[#2A2A2D] border-[#484C56] flex justify-between items-center'>
                                 <div className='p-2 text-white overflow-hidden text-xs font-spacegrotesk font-normal'>{link}</div>
-                                <div className='bg-primary w-10 h-full flex rounded-r justify-center cursor-pointer' onClick={copylink}><Image src='/dashboard/copy.svg' width={16} height={16} alt='copy' /></div>
+                                {copied ?
+                                <div className='bg-[#4CBB17] w-10 h-full flex rounded-r justify-center cursor-pointer'>
+                                    <Image src={'/dashboard/check.svg'} width={16} height={16} alt='copied' />
+                                </div>
+                                : <div className='bg-primary w-10 h-full flex rounded-r justify-center cursor-pointer' onClick={copylink}>
+                                    <Image src={'/dashboard/copy.svg'} width={16} height={16} alt='copy' />
+                                </div>}
                             </div>
                         </div>
                         <div>

@@ -4,34 +4,38 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { clearFile } from '../../Redux/features/UploadFile';
 import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 
-const UploadedFileCard = ({ fileName, fileSize, percentCompleted,key }: any) => {
+const UploadedFileCard = ({ fileName, fileSize, percentCompleted, id, hidden }: any) => {
     const dispatch = useDispatch();
     const token = getCookie('jwt')
-    const [loading, setLoading ] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
-    const deleteFile = async ()=>{
+
+    const deleteFile = async () => {
         setLoading(true)
-        try{
-            const res = await fetch(`${process.env.NEXT_BASE_URL}/v1/integration`,{
-                method:'DELETE',
-                headers:{
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/integration`, {
+                method: 'DELETE',
+                headers: {
                     authorization: `Bearer ${token}`,
-                    'INTEGRATION-ID ' : key 
+                    'INTEGRATION-ID': id
                 }
             })
-            if(!res.ok){
+            if (!res.ok) {
                 console.log('Network Response for deleting integration was not ok!')
             }
-            if(res.ok){
-                 await res.json()
-                 dispatch(clearFile(fileName))
+            if (res.ok) {
+                await res.json()
+                dispatch(clearFile(fileName))
+                router.refresh()
             }
         }
-        catch(err){
-            console.log('error in delete Integration API:',err)
+        catch (err) {
+            console.log('error in delete Integration API:', err)
         }
-        finally{
+        finally {
             setLoading(false)
         }
     }
@@ -49,8 +53,8 @@ const UploadedFileCard = ({ fileName, fileSize, percentCompleted,key }: any) => 
                             {/* <div>{fileSize} MB</div> */}
                         </div>
                         {percentCompleted === 100 ?
-                            <button onClick={deleteFile} disabled={loading}>
-                               {loading? 'deleting...' : 'clear'}
+                            <button onClick={deleteFile} disabled={loading} className={hidden}>
+                                {loading ? 'deleting...' : 'clear'}
                             </button> :
                             <></>
                         }

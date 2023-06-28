@@ -24,7 +24,10 @@ function AllDone() {
 
     return (
 
-        <div className='h-[75px] flex justify-center items-center'>
+        <div className='h-[75px] space-x-4 flex justify-center items-center'>
+            <Link href={`/create/dataSource`} >
+        <Button text={'Edit DataSource'} />
+      </Link>
             <Link href={'/dashboard'} onClick={handleClick}>
                 <Button text='All Done!' className='bg-primary text-white px-2' />
             </Link>

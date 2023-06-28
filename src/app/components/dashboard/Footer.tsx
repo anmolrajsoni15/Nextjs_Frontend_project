@@ -38,11 +38,11 @@ const Footer = ({hidden}:any) => {
 
   return (
     <section className='h-[110px]  flex items-center justify-center space-x-4 ' >
-      <Suspense fallback='loading...'>
+      
       <Link href={`/create/dataSource`} className={hidden}>
         <Button text={'Add more DataSources'} />
       </Link>
-      </Suspense>
+     
       <div onClick={getChatId}>
         <Link href={`/bloc/${blocId}`}>
           <Button className={''} text={'Test your Bloc'} />

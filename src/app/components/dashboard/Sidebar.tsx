@@ -187,7 +187,9 @@ const Sidebar = () => {
                     <form
                         onSubmit={(e: FormEvent<HTMLFormElement>) => {
                             e.preventDefault();
-                            createNewBloc();
+                            if (!isCreatingBloc) {
+                                createNewBloc();
+                            }
                         }}
                         className="flex flex-col p-8 py-10 gap-6 w-[50vw] items-center justify-center bg-[#181818] text-white rounded-lg">
                         <h1 className='text-center font-spacegrotesk font-bold text-5xl'>New  Bloc</h1>

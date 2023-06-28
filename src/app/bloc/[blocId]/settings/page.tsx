@@ -32,26 +32,38 @@ const Settings = () => {
   interface DataState {
     name?: string;
     subheading?: string;
-    image?: File | null;
     initialMsg?: string;
     basePrompt?: string;
     model?: string;
     isPublic?: string;
+    image?:string
   }
 
   const [data, setData] = useState<DataState>({});
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleChange = (
+  function imageToBase64(file:any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const handleChange = async (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
 
     if (type === "file") {
       const file = (e.target as HTMLInputElement)?.files?.[0] || null;
+      const base64String = await imageToBase64(file);
       setData((prevData) => ({
         ...prevData,
-        [name]: file,
+        [name]: base64String
       }));
     } else {
       setData((prevData) => ({
@@ -72,7 +84,7 @@ const Settings = () => {
           subHeading: data.subheading,
           initialMessage: data.initialMsg,
           openAiModel: data.model,
-          photo:'hello'
+          photo:data.image
           
         });
 
@@ -108,6 +120,38 @@ const Settings = () => {
     }
   };
 
+  const getBloc = async () => {
+    try {
+        if (typeof blocId == 'string') {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'BLOC-ID': blocId
+                }
+            })
+            if (!res.ok) {
+                console.log("Network response for bloc Initial msg was not ok!")
+            }
+            if (res.ok) {
+                const data = await res.json()
+                dispatch(setBlocName(data.name));
+                dispatch(setSubHeading(data.subHeading));
+                dispatch(setBasePrompt(data.basePrompt));
+                dispatch(setInitialMessage(data.initialMessage));
+                dispatch(setOpenAiModel(data.openAiModel));
+                dispatch(setIsPublic(data.isPublic))
+            }
+        }
+    }
+    catch (err) {
+        console.log('')
+    }
+}
+
+useEffect(()=>{
+getBloc()
+},[])
+
   return (
     <div className="text-white flex">
       <Sidebar />
@@ -125,7 +169,7 @@ const Settings = () => {
               <h3 className="w-[280px]">Name</h3>
               <Input
                 className={"w-[512px]"}
-                placeholder={""}
+                placeholder={blocState.blocName}
                 value={data.name}
                 name="name"
                 onChange={handleChange}
@@ -137,13 +181,14 @@ const Settings = () => {
               <h3 className="w-[280px]">Subheading</h3>
               <Input
                 className={"w-[512px]"}
-                placeholder={""}
+                placeholder={blocState.subHeading}
                 onChange={handleChange}
                 name="subheading"
                 value={data.subheading}
               />
             </div>
             {/* <hr /> */}
+
             {/* <div className="flex space-x-32">
               <h3 className="w-[280px]">Image</h3>
               <input
@@ -153,6 +198,7 @@ const Settings = () => {
                 name={"image"}
               />
             </div> */}
+            
             {/* <hr /> */}
             <div className="flex space-x-32 ">
               <h3 className="w-[280px]">Model</h3>
@@ -162,6 +208,7 @@ const Settings = () => {
                   value={data.model}
                   onChange={handleChange}
                   name="model"
+                  placeholder={blocState.openAiModel}
                 >
                   <option value={"gpt3.5-turbo"}>GPT 3.5 Turbo</option>
                   <option value={"gpt4"}>GPT 4</option>
@@ -177,7 +224,7 @@ const Settings = () => {
               <div className="space-y-2">
                 <Input
                   className={"w-[512px]"}
-                  placeholder={""}
+                  placeholder={blocState.initialMsg}
                   value={data.initialMsg}
                   name="initialMsg"
                   onChange={handleChange}
@@ -194,7 +241,7 @@ const Settings = () => {
               <div className="space-y-2">
                 <Input
                   className={"w-[512px]"}
-                  placeholder={""}
+                  placeholder={blocState.basePrompt}
                   value={data.basePrompt}
                   name="basePrompt"
                   onChange={handleChange}
@@ -212,6 +259,7 @@ const Settings = () => {
                   value={data.isPublic}
                   onChange={handleChange}
                   name="isPublic"
+                  
                 >
                   <option value={"true"}>Public</option>
                   <option value={"false"}>Private</option>

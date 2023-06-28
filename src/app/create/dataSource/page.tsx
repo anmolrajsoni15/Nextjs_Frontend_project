@@ -48,21 +48,23 @@ const page = async () => {
                     <div className='py-8 space-y-10'>
                         <h2 className='text-3xl font-semibold'>Data Source </h2>
                         <article className=' flex flex-col items-center'>
-                            <Suspense fallback={<p>Loading Integrations...</p>}>
+                            
                                 {(integrations && integrations.length > 0) ?
                                     integrations.map((item: { name: string, integrationId: string, type: 'file' | 'web' }, index: any) => {
                                         {
+                                            return(
                                             item.type == "file" ?
-                                            <UploadedFileCard fileName={item.name} percentCompleted={100} key={item.integrationId} />
+                                            <UploadedFileCard fileName={item.name} percentCompleted={100} key={index} id={item.integrationId}  />
                                             :
                                             <AddedUrl webUrl={item.name} key={item.integrationId} />
+                                            )
                                         }
                                     }
                                     )
                                     :
-                                    <div className='text-center'>Unable to fetch Integrations...</div>
+                                    <div className='text-center'>No Integrations </div>
                                 }
-                            </Suspense>
+                          
                         </article>
                         <h2 className='text-3xl font-semibold'>Add more data source </h2>
                         <article className=' space-y-6 flex flex-col '>
