@@ -9,17 +9,23 @@ import { useRouter } from "next/navigation";
 
 const customStyles = {
   content: {
-    top: "25%",
+    top: "35%",
     left: "50%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    transform: "translate(-50%, -50%) scale(0.5)",
     border: "none",
     borderRadius: "8px",
     padding: "none",
     boxShadow: "0px 6px 6px rgba(0, 0, 0, 0.25)",
     zIndex: "1000",
+    transition: "transform 0.5s ease-in-out",
+    opacity: 1,
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    transition: "background-color 0.3s ease-in-out",
   },
 };
 
@@ -136,7 +142,7 @@ const LoginButton = ({ text }) => {
         className="hidden lg:flex justify-center font-medium text-sm mt-5 cursor-pointer"
         onClick={handleLogin}
       >
-        <div className="flex items-center justify-evenly w-40 h-12 md:w-52 md:h-14 lg:w-52 lg:h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
+        <div className="flex items-center justify-evenly w-56 md:w-52 h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
           <div className="h-6 w-6 sm:w-8 sm:h-8 relative">
             <Image
               src="landing_images/google.svg"
@@ -152,7 +158,7 @@ const LoginButton = ({ text }) => {
         className="flex lg:hidden justify-center font-medium text-sm mt-5 cursor-pointer"
         onClick={openModal}
       >
-        <div className="flex items-center justify-evenly w-40 h-12 md:w-52 md:h-14 lg:w-52 lg:h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
+        <div className="flex items-center justify-evenly w-56 md:w-52 h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
           <div className="h-6 w-6 sm:w-8 sm:h-8 relative">
             <Image
               src="landing_images/google.svg"
@@ -169,16 +175,26 @@ const LoginButton = ({ text }) => {
         //   onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
+        onAfterOpen={() => {
+          // customStyles.content.opacity = 1;
+          customStyles.content.transform = "translate(-50%, -50%) scale(1)";
+          customStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        }}
+        onAfterClose={() => {
+          // customStyles.content.opacity = 0;
+          customStyles.content.transform = "translate(-50%, -50%) scale(0.5)";
+          customStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0)";
+        }}
         contentLabel="Bloc Name"
       >
-        <div className="bg-[#2b2b2b9d] text-white w-[90vw] md:w-[60vw] p-6 flex flex-col items-center justify-center gap-5">
+        <div className=" bg-[tomato] text-white w-[90vw] md:w-[60vw] p-6 flex flex-col items-center justify-center gap-5">
           <Image
-            src="/images/laptop.png"
+            src="/images/laptop.gif"
             width={150}
             height={150}
             alt="laptop"
           />
-          <div className="font-spacegrotesk font-bold text-lg text-center">
+          <div className="font-spacegrotesk font-bold text-2xl text-center max-w-[90%]">
             Use laptop or PC to Continue with Google
           </div>
         </div>

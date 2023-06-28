@@ -3,7 +3,7 @@ import Link from "next/link"
 const Footer = () => {
 
     return (
-        <footer className="pt-10 bg-black text-[#7d7d7d] px-10 w-[88%]">
+        <footer className="pt-10 bg-black text-[#7d7d7d] px-10 w-11/12 mx-auto">
             <div className="w-full">
                 <div className="mt-10 py-8 border-t border-gray-800 items-center justify-between sm:flex">
                     <p className="text-gray-400 text-center">© 2023 Bloc. All rights reserved.</p>

@@ -54,7 +54,7 @@ export default function App() {
 
   return (
     <section className="py-10" id="teams">
-      <div className="max-w-[90%] mx-auto md:px-8">
+      <div className="max-w-[90%] mx-auto px-8">
         <div className="flex flex-col w-full items-center justify-center">
             <h3 className="text-center text-white text-3xl font-bold sm:text-4xl font-poppins ">
             Meet our team
@@ -65,7 +65,7 @@ export default function App() {
             </p>
         </div>
         <div className="mt-12 w-full flex items-center justify-center mx-auto">
-          <ul className="grid gap-8 gap-x-32 sm:grid-cols-2 lg:grid-cols-3 mx-auto">
+          <ul className="grid gap-8 gap-x-[15%] w-full sm:grid-cols-2 lg:grid-cols-3 mx-auto">
             {team.map((item, idx) => (
               <li key={idx} className="flex gap-4 items-center">
                 <div className="flex-none w-24 h-24">
