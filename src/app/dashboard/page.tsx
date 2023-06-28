@@ -34,7 +34,7 @@ const page = async () => {
 
   return (
     <div className='text-white flex'>
-      <Sidebar />
+      <Sidebar allBlocs={blocs} />
       <section className='px-8 max-w-full relative overflow-hidden '>
         <Topbar text={'My Bloc'} />
         {/* <ProgressBar c1={'bg-white'} c2='bg-white' c3='bg-white' c4='bg-white ' /> */}
