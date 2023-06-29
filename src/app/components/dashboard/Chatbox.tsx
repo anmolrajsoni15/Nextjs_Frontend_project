@@ -10,7 +10,7 @@ import Image from 'next/image'
 import Button from './Button'
 // import { clearFiles } from '../../Redux/features/UploadFile'
 import { getCookie, setCookie } from 'cookies-next'
-import { BlocState, setInitialMessage } from '../../Redux/features/blocState'
+import { BlocState, setBlocName, setInitialMessage, setPhoto } from '../../Redux/features/blocState'
 import CircularProgress, {
     circularProgressClasses,
     CircularProgressProps,
@@ -32,6 +32,17 @@ function Chatbox() {
     const chatId = getCookie('chatId')
     const blocId = getCookie('blocId')
 
+    const primaryImage = blocState.photo
+  const fallbackImage = '/landing_images/bloc_logo.svg';
+  const [imageSource, setImageSource] = React.useState(primaryImage);
+
+  const handleImageError = () => {
+    setImageSource(fallbackImage);
+  };
+
+
+
+
     const getBloc = async () => {
         try {
             if (typeof blocId == 'string') {
@@ -48,6 +59,8 @@ function Chatbox() {
                     const data = await res.json()
                     setInitialMsg(data.initialMessage)
                     dispatch(setInitialMessage(data.initialMessage))
+                    dispatch(setPhoto(blocState.photo))
+                    dispatch(setBlocName(blocState.blocName))
                 }
 
             }
@@ -175,15 +188,17 @@ function Chatbox() {
                     <div className="relative md:h-10 md:w-10 h-6 w-6">
                         <Image
                             className="object-cover"
-                            src="/landing_images/bloc_logo.svg"
+                            src={imageSource}
                             alt="bloc logo"
                             fill
                             priority
+                            onError={handleImageError}
+
                         />
                     </div>
                     <div>
-                        <div className='text-2xl '>Bloc</div>
-                        <p className='text-xs'>Share product upadates</p>
+                        <div className='text-2xl '>{blocState.blocName}</div>
+                        <p className='text-xs'>{blocState.subHeading}</p>
                     </div>
                 </div>
               <button className='space-x-4 mr-5 ' onClick={newChat} disabled={loadingNewChat || loading} >
@@ -213,7 +228,7 @@ function Chatbox() {
                 <div className='flex px-2 py-2 space-x-1 mr-[25%] mt-2'>
 
                     <span className=' flex items-end justify-end  flex-shrink-0'>
-                        <Image src={'/landing_images/bloc_logo.svg'} width={20} height={20} alt='bloc' />
+                        <Image src={imageSource} width={20} height={20} alt='bloc' onError={handleImageError} />
                     </span>
                     <span className={'bg-gray px-2 py-1 rounded-lg text-lg '}>
                         {blocState.initialMsg}
@@ -236,7 +251,7 @@ function Chatbox() {
                                 <div className='flex px-2 py-2 space-x-1 mr-[25%]'>
 
                                     <span className=' flex items-end justify-end  flex-shrink-0 my-1'>
-                                        <Image src={'/landing_images/bloc_logo.svg'} width={20} height={20} alt='bloc' />
+                                        <Image src={imageSource} width={20} height={20} alt='bloc' onError={handleImageError} />
                                     </span>
                                     <span className={'bg-gray px-2 py-1 rounded-lg text-lg '}>
                                         {msg.text}
@@ -250,9 +265,9 @@ function Chatbox() {
                 {loading && (
                     <div className='flex px-2 py-2 space-x-1 mr-[25%]'>
                         <span className='flex items-end justify-end flex-shrink-0'>
-                            <Image src={'/landing_images/bloc_logo.svg'} width={20} height={20} alt='bloc' />
+                            <Image src={imageSource} width={20} height={20} alt='bloc' onError={handleImageError} />
                         </span>
-                        <span className='bg-gray px-2 py-1 rounded-lg text-lg'>
+                        <span className='bg-gray px-2 py-1 rounded-lg text-lg' >
                             <span className='animate-pulse'>
                                 Loading<span className='dot-dot-dot'>...</span>
                             </span>
@@ -268,7 +283,7 @@ function Chatbox() {
                     placeholder={''}
                     value={prompt}
                 />
-                <button onClick={handleClick} className='' disabled={loading || loadingNewChat} >
+                <button onClick={handleClick} className='' disabled={loading || loadingNewChat} > {""}
                     <Image src='/dashboard/send.svg' alt='' className='border-borderColor border-[1px] hover:cursor-pointer p-2 rounded' width={40} height={40} />
                 </button>
             </div>

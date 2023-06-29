@@ -193,8 +193,9 @@ const Sidebar: React.FC<Props> = ({ allBlocs }) => {
           onRequestClose={closeModal}
           style={customStyles}
           contentLabel="Bloc Name"
+          ariaHideApp={false}
         >
-          {allBlocs.length < 3 ? (
+          {allBlocs === undefined || allBlocs < 3 ? (
             <form
               onSubmit={(e: FormEvent<HTMLFormElement>) => {
                 e.preventDefault();

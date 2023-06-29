@@ -5,8 +5,9 @@ export type BlocState =  {
   initialMsg:string,
   basePrompt:string,
   subHeading:string,
-  openAiModel:"gpt3.5-turbo" | 'gpt-4'
-  isPublic: boolean
+  openAiModel:"gpt3.5-turbo" | 'gpt-4',
+  isPublic: boolean,
+  photo:string
 }
 
 const initialState: BlocState = {
@@ -15,7 +16,8 @@ const initialState: BlocState = {
   basePrompt:'',
   subHeading:'',
   openAiModel: 'gpt3.5-turbo',
-  isPublic: true
+  isPublic: true,
+  photo:''
 };
 
 export const blocSlice = createSlice({
@@ -40,11 +42,14 @@ export const blocSlice = createSlice({
     setIsPublic:(state, action: PayloadAction<boolean>)=>{
       state.isPublic = action.payload
     },
+    setPhoto:(state, action: PayloadAction<string>) => {
+      state.photo = action.payload;
+    },
     clearBlocName: (state) => {
       state.blocName = '';
     },
   },
 });
 
-export const { setBlocName,setInitialMessage, setBasePrompt, setSubHeading, setOpenAiModel, clearBlocName,setIsPublic } = blocSlice.actions;
+export const { setBlocName,setInitialMessage, setBasePrompt, setSubHeading, setOpenAiModel, clearBlocName,setIsPublic,setPhoto } = blocSlice.actions;
 export default blocSlice.reducer;

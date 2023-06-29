@@ -16,14 +16,14 @@ import {
   setInitialMessage,
   setOpenAiModel,
   BlocState,
-  setIsPublic
+  setIsPublic,
+  setPhoto,
 } from "../../../Redux/features/blocState";
 import { RootState } from "../../../Redux/store";
-
-
+import Image from "next/image";
+import { set } from "date-fns";
 
 const Settings = () => {
-
   const dispatch = useDispatch();
   const blocState: BlocState = useSelector(
     (store: RootState) => store.blocState
@@ -31,29 +31,34 @@ const Settings = () => {
   const router = useRouter();
   const blocId = getCookie("blocId");
   const token = getCookie("jwt");
+  const [blocs, setBlocs] = useState<any>([]);
 
   const getBlocs = async () => {
-    const tokens = getCookie("jwt")
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
-      headers: {
-        Authorization: `Bearer ${tokens}`,
-      },
-      cache: "no-cache"
-     
-    })
+    const tokens = getCookie("jwt");
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`,
+      {
+        headers: {
+          Authorization: `Bearer ${tokens}`,
+        },
+        cache: "no-cache",
+      }
+    );
     if (!res.ok) {
-      console.log('Failed to fetch data', res.status)
-  }
-    
-    return res.json()
-  }
-  const [blocs, setBlocs] = useState<any>([])
+      console.log("Failed to fetch data", res.status);
+    }
+    if(res.ok){
+      const data = await res.json();
+      return data;
+    }
+  };
 
   useEffect(() => {
-    const resData =  getBlocs();
-    setBlocs(resData);
-  }
-  , [])
+    (async () => {
+      const resData = await getBlocs();
+      setBlocs(resData);
+    })();
+  }, []);
 
   interface DataState {
     name?: string;
@@ -62,13 +67,13 @@ const Settings = () => {
     basePrompt?: string;
     model?: string;
     isPublic?: string;
-    image?:string
+    photo?: string;
   }
 
   const [data, setData] = useState<DataState>({});
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  function imageToBase64(file:any) {
+  function imageToBase64(file: any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -85,11 +90,11 @@ const Settings = () => {
     const { name, value, type } = e.target;
 
     if (type === "file") {
-      const file = (e.target as HTMLInputElement)?.files?.[0] || null;
+      const file = (e.target as HTMLInputElement)?.files?.[0];
       const base64String = await imageToBase64(file);
       setData((prevData) => ({
         ...prevData,
-        [name]: base64String
+        [name]: base64String,
       }));
     } else {
       setData((prevData) => ({
@@ -100,18 +105,17 @@ const Settings = () => {
   };
 
   const applySetting = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (typeof blocId == "string") {
       try {
         const bodyData = JSON.stringify({
           name: data.name,
-          isPublic: data.isPublic=='true' ? true: false,
+          isPublic: data.isPublic == "true" ? true : false,
           basePrompt: data.basePrompt,
           subHeading: data.subheading,
           initialMessage: data.initialMsg,
           openAiModel: data.model,
-          photo:data.image
-          
+          photo: data.photo,
         });
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
@@ -135,53 +139,52 @@ const Settings = () => {
           dispatch(setBasePrompt(result.basePrompt));
           dispatch(setInitialMessage(result.initialMessage));
           dispatch(setOpenAiModel(result.openAiModel));
-          dispatch(setIsPublic(result.isPublic))
+          dispatch(setIsPublic(result.isPublic));
+          dispatch(setPhoto(result.photo));
         }
       } catch (error) {
         console.log("Error in patch bloc api: ", error);
-      }
-      finally{
-        setIsLoading(false)
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
   const getBloc = async () => {
-
     try {
-        if (typeof blocId == 'string') {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'BLOC-ID': blocId
-                }
-            })
-            if (!res.ok) {
-                console.log("Network response for bloc Initial msg was not ok!")
-            }
-            if (res.ok) {
-                const data = await res.json()
-                dispatch(setBlocName(data.name));
-                dispatch(setSubHeading(data.subHeading));
-                dispatch(setBasePrompt(data.basePrompt));
-                dispatch(setInitialMessage(data.initialMessage));
-                dispatch(setOpenAiModel(data.openAiModel));
-                dispatch(setIsPublic(data.isPublic))
-            }
+      if (typeof blocId == "string") {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "BLOC-ID": blocId,
+          },
+        });
+        if (!res.ok) {
+          console.log("Network response for bloc Initial msg was not ok!");
         }
+        if (res.ok) {
+          const data = await res.json();
+          dispatch(setBlocName(data.name));
+          dispatch(setSubHeading(data.subHeading));
+          dispatch(setBasePrompt(data.basePrompt));
+          dispatch(setInitialMessage(data.initialMessage));
+          dispatch(setOpenAiModel(data.openAiModel));
+          dispatch(setIsPublic(data.isPublic));
+          dispatch(setPhoto(data.photo));
+        }
+      }
+    } catch (err) {
+      console.log("");
     }
-    catch (err) {
-        console.log('')
-    }
-}
+  };
 
-useEffect(()=>{
-getBloc()
-},[])
+  useEffect(() => {
+    getBloc();
+  }, []);
 
   return (
     <div className="text-white flex">
-      <Sidebar allBlocs={blocs} />
+      <Sidebar allBlocs={blocs.length} />
       <section className="px-8 ">
         <Topbar text={"Settings"} />
         <ProgressBar
@@ -193,6 +196,7 @@ getBloc()
         <div className="pt-8">
           <div className=" space-y-8">
             <div className="flex space-x-32">
+              {/* {blocState.photo && <Image src={blocState.photo} height={20} width={20} alt='blocImage' />} */}
               <h3 className="w-[280px]">Name</h3>
               <Input
                 className={"w-[512px]"}
@@ -216,16 +220,17 @@ getBloc()
             </div>
             {/* <hr /> */}
 
-            {/* <div className="flex space-x-32">
-              <h3 className="w-[280px]">Image</h3>
+            <div className="flex space-x-32">
+              <h3 className="w-[280px]">Photo</h3>
               <input
                 className="cursor-pointer"
                 type="file"
                 onChange={handleChange}
-                name={"image"}
+                name={"photo"}
+                accept=".png"
               />
-            </div> */}
-            
+            </div>
+
             {/* <hr /> */}
             <div className="flex space-x-32 ">
               <h3 className="w-[280px]">Model</h3>
@@ -301,10 +306,19 @@ getBloc()
         </div>
         <div className="flex justify-center space-x-3 mt-10 ">
           {/* <Link href={`/bloc/${blocId}`}> */}
-         
-            <Button text={"Cancel"} className={""} disabled={isLoading} onClick={router.back} />
+
+          <Button
+            text={"Cancel"}
+            className={""}
+            disabled={isLoading}
+            onClick={router.back}
+          />
           {/* </Link> */}
-          <Button text={isLoading? "Applying":"Apply"} onClick={applySetting} disabled={isLoading} />
+          <Button
+            text={isLoading ? "Applying" : "Apply"}
+            onClick={applySetting}
+            disabled={isLoading}
+          />
         </div>
       </section>
     </div>

@@ -18,8 +18,7 @@ const getBlocs = async (): Promise<any> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
-      cache: "no-cache"
+      }
      
     })
     if (!res.ok) {
@@ -59,7 +58,7 @@ const page = async () => {
 
     return (
         <div className='text-white flex'>
-            <Sidebar allBlocs={blocs} />
+            <Sidebar allBlocs={blocs.length} />
             <section className='px-8 flex flex-col justify-between w-[85vw] '>
                 <div className='space-y-4'>
                     <Topbar text={'New Bloc'} />

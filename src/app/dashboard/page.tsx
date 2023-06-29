@@ -16,8 +16,7 @@ const getBlocs = async (): Promise<Bloclist[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/blocs`, {
     headers: {
       Authorization: `Bearer ${token}`,
-    },
-    cache: "no-cache"
+    }
    
   })
   if (!res.ok) {
@@ -30,11 +29,11 @@ const getBlocs = async (): Promise<Bloclist[]> => {
 const page = async () => {
 
   const blocs = await getBlocs()
-  console.log('blocs info', blocs)
+  console.log('blocs length', blocs.length)
 
   return (
     <div className='text-white flex'>
-      <Sidebar allBlocs={blocs} />
+      <Sidebar allBlocs={blocs.length} />
       <section className='px-8 max-w-full relative overflow-hidden '>
         <Topbar text={'My Bloc'} />
         {/* <ProgressBar c1={'bg-white'} c2='bg-white' c3='bg-white' c4='bg-white ' /> */}
