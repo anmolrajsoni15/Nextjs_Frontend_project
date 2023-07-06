@@ -3,8 +3,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterSlice from './features/counter'
 import UploadedFileSlice from './features/UploadFile'
+import addWebsiteSlice from './features/Addwebsite'
 import messageSlice from './features/Message'
 import blocSlice from './features/blocState'
+import newBlocSlice from './features/blocSlice'
+import userSlice from './features/userSlice'
 
 // import userReducer from './features/userReducer'
 
@@ -12,8 +15,11 @@ export const store = configureStore({
   reducer: {
     counter : counterSlice,
     uploadFile: UploadedFileSlice,
+    addWebsite: addWebsiteSlice,
     Message: messageSlice,
-    blocState: blocSlice
+    blocState: blocSlice,
+    newBlocState: newBlocSlice,
+    user: userSlice,
 
     // user: userReducer,
   },

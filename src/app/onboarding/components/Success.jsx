@@ -26,11 +26,6 @@ const customStyles = {
 
 const Success = () => {
   const router = useRouter()
-  const handleClick = () => {
-    // incrementCnt();
-    router.push('/dashboard')
-  };
-
 
   const [blocName, setBlocName] = useState('');
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -80,7 +75,7 @@ const Success = () => {
       localStorage.setItem("blocId", result.blocId)
       setCookie('blocId', result.blocId)
 
-      router.push('/create')
+      router.push('/new/creates')
     }
     catch (error) {
       console.log("There is a problem with your fetching operations: ", error)
@@ -138,7 +133,7 @@ const Success = () => {
                 
           </Modal>
         </div>
-        <Link href='/dashboard'>  <div className="font-spacegrotesk font-medium text-sm leading-5 text-white cursor-pointer">
+        <Link href='/new/dashboard'>  <div className="font-spacegrotesk font-medium text-sm leading-5 text-white cursor-pointer">
           Let me look around first
           <span className="px-1">
             <EastIcon style={{ fontSize: "small" }} />

@@ -47,7 +47,6 @@ const LoginButton = ({ text }) => {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result);
-      console.log("it is happening");
       var user = result.user;
 
       var userDetail = JSON.stringify({
@@ -122,7 +121,7 @@ const LoginButton = ({ text }) => {
             console.log("login response: ", response);
             setCookie("user", user.email);
             setCookie("jwt", response.access_token);
-            router.push("/dashboard");
+            router.push("/new/dashboard");
           }
         } catch (error) {
           console.log(error);

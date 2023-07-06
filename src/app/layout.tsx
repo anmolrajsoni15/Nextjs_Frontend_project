@@ -3,6 +3,7 @@ import './styles/globals.css'
 import { Providers } from './Redux/provider'
 import Script from 'next/script'
 import './globals.css'
+import Head from 'next/head'
 
 export const metadata = {
   title: 'Bloc',
@@ -14,6 +15,7 @@ export const metadata = {
   },
 }
 
+
 export default function RootLayout({
   children,
 }: {
@@ -21,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
+      <Head>
         <link rel="icon" href="favicon/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
@@ -29,7 +31,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png" />
         <link rel="manifest" href="favicon/site.webmanifest" />
         <link rel="mask-icon" href="favicon/favicon.svg" />
-      </head>
+      </Head>
 
       <body className='bg-black'>
         <Providers>

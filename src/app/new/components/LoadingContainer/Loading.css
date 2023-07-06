@@ -1,0 +1,28 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .loading-square {
+    width: 120px;
+    height: 100px;
+  }
+  
+  .loading-path {
+    stroke: #0784C6;
+    stroke-width: 14px;
+    fill: none;
+    stroke-dasharray: 2050;
+    stroke-dashoffset: 2050;
+    animation: draw-square 2s linear infinite;
+  }
+  
+  @keyframes draw-square {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
