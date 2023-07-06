@@ -1,9 +1,4 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
-import DataSourceCard from "./DataSourceCard";
-import ChatBot from "./ChatBot";
-import NewChatBot from "./NewChatBot";
+import React from "react";
 import DataSources from "./DataSources";
 import BotContainer from "./BotContainer";
 
