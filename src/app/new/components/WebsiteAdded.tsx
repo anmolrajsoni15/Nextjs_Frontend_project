@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { clearWebsite } from "../../Redux/features/Addwebsite";
 
 interface Props {
     inputVal: string;
@@ -28,7 +27,7 @@ const WebsiteAdded: React.FC<Props> = ({inputVal}) => {
         </div>
       </div>
       <div className="flex items-center justify-start w-[15%] h-full rounded-md">
-        <button onClick={()=> dispatch(clearWebsite(inputVal))}  className=" border-none outline-none text-sm font-spacegrotesk text-[#ffffff7d] placeholder:text-[#FFFFFF33] font-medium flex items-center justify-start rounded-md h-full w-fit">
+        <button  className=" border-none outline-none text-sm font-spacegrotesk text-[#ffffff7d] placeholder:text-[#FFFFFF33] font-medium flex items-center justify-start rounded-md h-full w-fit">
           <Image
             src="/icons/delete.svg"
             width={16}

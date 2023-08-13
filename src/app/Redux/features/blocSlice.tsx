@@ -11,6 +11,9 @@ interface BlocState {
     allIntegrations?: any;
     integrationLoading?: boolean;
     integrationData?: any;
+    message?: string;
+    mode?: boolean;
+    sampleQuestions?: any;
 }
 
 const initialState: BlocState = {
@@ -19,6 +22,8 @@ const initialState: BlocState = {
     allIntegrations: [],
     blocsCount: 0,
     integrationData: {},
+    mode: true,
+    sampleQuestions: [],
 }
 
 export const newblocSlice = createSlice({
@@ -31,10 +36,12 @@ export const newblocSlice = createSlice({
         createBlocSuccess: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.blocData = action.payload;
+            state.message = "success";
         },
         createBlocFail: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.error = action.payload;
+            state.message = "error";
         },
         getAllBlocsRequest: (state) => {
             state.loading = true;
@@ -58,16 +65,29 @@ export const newblocSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        getPublicBlocRequest: (state) => {
+            state.loading = true;
+        },
+        getPublicBlocSuccess: (state, action: PayloadAction<any>) => {
+            state.loading = false;
+            state.blocData = action.payload;
+        },
+        getPublicBlocFail: (state, action: PayloadAction<any>) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
         updateBlocRequest: (state) => {
             state.loading = true;
         },
         updateBlocSuccess: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.blocData = action.payload;
+            state.message = "success";
         },
         updateBlocFail: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.error = action.payload;
+            state.message = "error";
         },
         deleteBlocRequest: (state) => {
             state.loading = true;
@@ -134,6 +154,26 @@ export const newblocSlice = createSlice({
             state.integrationLoading = false;
             state.error = action.payload;
         },
+        getAllSampleQuestions: (state) => {
+            state.sampleQuestions = state.blocData.sampleQuestions;
+        },
+        updateSampleQuestions: (state, action: PayloadAction<any>) => {
+            state.blocData.sampleQuestions = action.payload;
+            state.sampleQuestions = state.blocData.sampleQuestions;
+        },
+        removeSampleQuestion: (state, action: PayloadAction<any>) => {
+            state.sampleQuestions = state.sampleQuestions.filter((question: any) => question !== action.payload);
+        },
+        removeAllSampleQuestions: (state) => {
+            state.sampleQuestions = [];
+        },
+        updateBlocColor: (state, action: PayloadAction<any>) => {
+            state.blocData.primaryColor = action.payload.primaryColor;
+            state.blocData.secondaryColor = action.payload.secondaryColor;
+        },
+        updateBlocTheme: (state) => {
+            state.mode = state.blocData.isDark;
+        },
         refreshBloc: (state) => {
             state.blocData = {};
             state.allIntegrations = [];
@@ -141,6 +181,9 @@ export const newblocSlice = createSlice({
         },
         clearErrors: (state) => {
             state.error = null;
+        },
+        clearMessage: (state) => {
+            state.message = "";
         }
     }
 });
@@ -155,6 +198,9 @@ export const {
     getBlocRequest,
     getBlocSuccess,
     getBlocFail,
+    getPublicBlocRequest,
+    getPublicBlocSuccess,
+    getPublicBlocFail,
     updateBlocRequest,
     updateBlocSuccess,
     updateBlocFail,
@@ -175,8 +221,15 @@ export const {
     deleteIntegrationSuccess,
     deleteIntegrationUpdate,
     deleteIntegrationFail,
+    getAllSampleQuestions,
+    updateSampleQuestions,
+    removeSampleQuestion,
+    removeAllSampleQuestions,
+    updateBlocColor,
+    updateBlocTheme,
     refreshBloc,
-    clearErrors
+    clearErrors,
+    clearMessage,
 } = newblocSlice.actions;
 
 export default newblocSlice.reducer;

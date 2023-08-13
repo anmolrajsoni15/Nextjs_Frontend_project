@@ -9,11 +9,22 @@ import How from "./components/How";
 import Logo from "./components/Logo";
 import Success from "./components/Success";
 import "./globals.css";
+import { getCookie } from "cookies-next";
+import { getUser } from "../services/apiServices";
+import { useDispatch } from "react-redux";
 
 function OnboardingPage() {
+  const dispatch = useDispatch();
+
   const [cnt, setCnt] = useState(0);
   const [shouldRenderComponent, setShouldRenderComponent] = useState(false);
 
+  const token = getCookie("jwt");
+  useEffect(() => {
+    if(token){
+      dispatch(getUser(token));
+    }
+  }, [token]);
 
   useEffect(() => {
     setShouldRenderComponent(true);

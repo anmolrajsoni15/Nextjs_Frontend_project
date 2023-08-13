@@ -20,7 +20,7 @@ const Dropdown = ({ icon, setValue, userData }) => {
 
   useEffect(() => {
     var val;
-    if(user.designation === "none")
+    if(user.designation === "")
       val = "Choose Designation";
     else
       val = user.designation;
@@ -44,7 +44,7 @@ const Dropdown = ({ icon, setValue, userData }) => {
       <div className="icons w-[20%] text-[#f3f3f3cc] flex items-center justify-center">
         {icon}
       </div>
-      <div className="w-[70%] text-[13px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
+      <div onClick={toggleDropdown} className="w-[70%] text-[13px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
         {selectedOption}
       </div>
       <button className="bg-transparent w-[10%]" onClick={toggleDropdown}>

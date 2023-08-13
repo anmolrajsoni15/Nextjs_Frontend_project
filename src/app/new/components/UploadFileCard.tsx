@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { getCookie } from 'cookies-next'
 import { uploadFile } from '../../services/apiServices'
 import { setPercentCompleted } from '../../Redux/features/UploadFile'
+import { showNotification } from '../../Notifications/NotificationManager'
 
 const UploadFileCard = () => {
 
@@ -44,7 +45,8 @@ const UploadFileCard = () => {
                 }
             }
 
-            dispatch(uploadFile(fileUpload, formData, config));
+            await dispatch(uploadFile(fileUpload, formData, config));
+            showNotification('success', 'Your file will be uploaded shortly');
         }
     }
 

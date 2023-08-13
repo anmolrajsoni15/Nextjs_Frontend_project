@@ -2,8 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
-import image1 from "../../../../public/images/image1.png";
-import image2 from "../../../../public/images/image2.png";
+import image1 from "../../../../public/images/image1.svg";
+import image2 from "../../../../public/images/image2.svg";
 import Bottom from "./Bottom";
 import Qualities from "./Qualities";
 import Link from "next/link";
@@ -24,7 +24,7 @@ function Features() {
       </div>
       <div className="flex flex-col md:flex-row w-5/6 items-center gap-6 md:h-[415px]">
         <div className="border-color2 flex w-[95%] md:w-1/2 rounded-3xl items-center h-full">
-          <div className="bg-black rounded-3xl p-6 gap-8 flex flex-col w-full h-full items-center">
+          <div className="bg-[#121212] rounded-3xl p-6 gap-8 flex flex-col w-full h-full items-center">
             <div className="h-3/5 flex items-center justify-center">
               <Image src={image1} alt="icon1" />
             </div>
@@ -40,7 +40,7 @@ function Features() {
           </div>
         </div>
         <div className="border-color2 flex w-[95%] md:w-1/2 rounded-3xl items-center h-full">
-          <div className="bg-black rounded-3xl p-6 gap-8 flex flex-col w-full h-full items-center">
+          <div className="bg-[#121212] rounded-3xl p-6 gap-8 flex flex-col w-full h-full items-center">
             <div className="h-3/5 flex items-center justify-center">
               <Image src={image2} alt="icon1" />
             </div>

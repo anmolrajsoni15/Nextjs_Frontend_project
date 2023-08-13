@@ -1,4 +1,5 @@
 import React from 'react'
+import '../globals.css'
 
 export const metadata = {
   title: 'Bloc',
@@ -11,8 +12,10 @@ export default function NewLayout({
     children: React.ReactNode
   })  {
   return (
-    <>
+    <html>
+      <body>
         {children}
-    </>
+      </body>
+    </html>
   )
 }

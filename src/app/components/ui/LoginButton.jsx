@@ -141,8 +141,8 @@ const LoginButton = ({ text }) => {
         className="hidden lg:flex justify-center font-medium text-sm mt-5 cursor-pointer"
         onClick={handleLogin}
       >
-        <div className="flex items-center justify-evenly w-56 md:w-52 h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
-          <div className="h-6 w-6 sm:w-8 sm:h-8 relative">
+        <div className="flex items-center justify-evenly gap-3 bg-[#1C1C1C] hover:border-[#FFFFFF99] rounded-md border-2 border-[#ffffff1a] px-[18px] py-[17px]">
+          <div className="h-5 w-5 sm:w-6 sm:h-6 relative">
             <Image
               src="landing_images/google.svg"
               alt="Google Logo"
@@ -150,15 +150,15 @@ const LoginButton = ({ text }) => {
               fill
             />
           </div>
-          <div className="sm:font-medium text-base ">{text}</div>
+          <div className="sm:font-medium text-lg font-spacegrotesk ">{text}</div>
         </div>
       </div>
       <div
         className="flex lg:hidden justify-center font-medium text-sm mt-5 cursor-pointer"
         onClick={openModal}
       >
-        <div className="flex items-center justify-evenly w-56 md:w-52 h-12 bg-[#0784C6] hover:bg-[#2793cd] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
-          <div className="h-6 w-6 sm:w-8 sm:h-8 relative">
+        <div className="flex items-center justify-evenly w-56 md:w-52 h-12 bg-[#1C1C1C] hover:border-[#FFFFFF99] rounded-md border-2 border-[#ffffff1a] font-spacegrotesk text-base md:text-lg leading-6">
+          <div className="h-5 w-5 sm:w-5 sm:h-5 relative">
             <Image
               src="landing_images/google.svg"
               alt="Google Logo"

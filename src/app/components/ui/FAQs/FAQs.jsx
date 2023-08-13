@@ -33,7 +33,7 @@ const faqsList = [
     },
     {
         q: " What apps can bloc be integrated with?",
-        a: "Notion, Slack, Figma and Google Workspace right now. We are constantly adding more.",
+        a: "Bloc can be integrated with a lot of apps, so you never miss anything. Notion, Google Drive, Figma, and Slack, we have it all.",
     },
     {
         q: "How does Bloc ensure the security of the knowledge uploaded?",
@@ -63,7 +63,7 @@ const FAQs = () => (
                 </h2>
 
                 <p className=" mt-3 text-lg font-spacegrotesk font-medium">
-                    Here are the most questions people always ask about.
+                Here are the most frequently asked questions.
                 </p>
             </div>
             <GradientWrapper wrapperClassName="max-w-xl h-16 top-[45%] inset-x-0" className="h-fit">

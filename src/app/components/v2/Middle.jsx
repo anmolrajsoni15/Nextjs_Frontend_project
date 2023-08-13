@@ -2,8 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import MiddleImg from "../../../../public/images/middle.png";
-import Globe from "./Globe";
+import MiddleImg from "../../../../public/images/middle.svg";
 import GradientWrapper from "../GradientWrapper";
 
 function Middle() {
@@ -26,7 +25,7 @@ function Middle() {
           <Image
             src={MiddleImg}
             alt="middle"
-            className="border-4 border-solid border-[#1B1B1B] rounded-xl"
+            className=""
           />
           </GradientWrapper>
         </div>

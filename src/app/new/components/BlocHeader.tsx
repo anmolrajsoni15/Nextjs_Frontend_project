@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import TokenCard from "./TokenCard";
 import { AiOutlineCamera, AiOutlineSave } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { updateBloc } from "src/app/services/apiServices";
+import { updateBloc } from "../../services/apiServices";
 import { getCookie } from "cookies-next";
 
 interface Props {
@@ -24,7 +24,7 @@ const BlocHeader: React.FC<Props> = ({ blocData, user }) => {
 
   useEffect(() => {
     setBlocName(blocData.name);
-    if(blocData.photo){
+    if(blocData.photo && blocData.photo !== "ByteArray"){
         setPhoto(blocData.photo);
     }
   }, [blocData]);
@@ -71,11 +71,11 @@ const updateImage = async() => {
   return (
     <div className="w-full flex items-start justify-between p-9 mb-6">
       <div className="flex items-start justify-center gap-4 w-3/4">
-        <div className="relative rounded-full group">
-          <Image src={photo} alt="img" width={80} height={80} className="rounded-full" />
+        <div className="relative rounded-full w-20 h-20 group">
+          <Image src={photo} alt="img" width={80} height={80} className="rounded-full object-contain aspect-square bg-cover" />
 
           <div className="absolute w-full h-full inset-0 opacity-0 group-hover:opacity-100 flex justify-center items-center">
-            <label htmlFor="input_file" onChange={handleFileInput} className="bg-black w-full h-full flex items-center justify-center bg-opacity-60 rounded-full p-2">
+            <label htmlFor="input_file" onChange={handleFileInput} className="bg-black w-full h-full flex items-center justify-center bg-opacity-60 rounded-full">
             <input type="file" accept='image/*' id="input_file" className="hidden" />
 
               {/* <Image src="/icons/edit.svg" alt="edit" width={50} height={50} /> */}
@@ -118,7 +118,7 @@ const updateImage = async() => {
           {/* {blocName}
           </input> */}
           <div className="font-spacegrotesk font-medium text-base leading-6 text-[#FFFFFFCC]">
-            A chatbot for {blocData.subHeading}
+            {blocData?.subHeading}
           </div>
         </div>
       </div>

@@ -48,6 +48,16 @@ export const userSlice = createSlice({
         getCreditFail: (state, action: PayloadAction<any>) => {
             state.loading = false;
             state.error = action.payload;
+        },
+        logoutRequest: (state) => {
+            state.loading = true;
+        },
+        logoutSuccess: (state) => {
+            state.loading = false;
+        },
+        logoutFail: (state, action: PayloadAction<any>) => {
+            state.loading = false;
+            state.error = action.payload;
         }
     }
 })
@@ -62,6 +72,9 @@ export const {
     getCreditRequest,
     getCreditSuccess,
     getCreditFail, 
+    logoutRequest,
+    logoutSuccess,
+    logoutFail
 } = userSlice.actions;
 
 export default userSlice.reducer;

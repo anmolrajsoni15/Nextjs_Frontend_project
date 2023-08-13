@@ -5,12 +5,9 @@ import { FiChevronDown } from "react-icons/fi";
 import Image from "next/image";
 
 const options = [
-  "Founder/ Co-Founder",
-  "Developer",
-  "Customer Support",
-  "Marketing",
-  "Sales",
-  "Operations",
+  "On your own website as a section",
+  "On your own website as a Chatbot",
+  "On Askbloc hosted solution",
 ];
 
 interface DropdownProps {
@@ -49,7 +46,7 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, setValue, value }) => {
       <div className="icons w-[15%] text-[#f3f3f3cc] flex items-center justify-center">
         <Image src={icon} alt="icon" width={19} height={19} />
       </div>
-      <div className=" w-[75%] text-[13px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
+      <div onClick={toggleDropdown} className=" w-[75%] text-[13px] leading-4 font-medium font-spacegrotesk text-[#ffffffcc]">
         {selectedOption}
       </div>
       <button className="bg-transparent w-[10%]" onClick={toggleDropdown}>
@@ -71,6 +68,11 @@ const Dropdown: React.FC<DropdownProps> = ({ icon, setValue, value }) => {
               {option}
             </li>
           ))}
+          <li 
+            className="p-2 hover:bg-gray-200 cursor-pointer hover:bg-[#5e5e5e] border border-solid border-zinc-500 rounded-3xl"
+          >
+            On Whatsapp (Coming Soon)
+          </li>
         </ul>
       )}
     </div>

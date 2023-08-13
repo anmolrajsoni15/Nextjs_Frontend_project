@@ -2,14 +2,16 @@
 
 import React from "react";
 import Image from "next/image";
-import { getCookie } from "cookies-next";
-import { deleteBloc, getAllBlocs } from "../../services/apiServices";
+import { getCookie, setCookie } from "cookies-next";
+import { blocExists, deleteBloc, getAllBlocs } from "../../services/apiServices";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { showNotification } from "../../Notifications/NotificationManager";
 import ShareModal from "./ShareModal";
 import Modal from "react-modal";
+import { refreshBloc } from "../../Redux/features/blocSlice";
+import DeleteModal from "./DeleteModal";
 
 const customStyles = {
   content: {
@@ -21,7 +23,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     opacity: 1,
     border: "1.75px solid rgba(0, 0, 0, 0.83)",
-    borderRadius: "10px",
+    borderRadius: "15px",
     padding: "none",
     boxShadow: "0px 6px 6px rgba(0, 0, 0, 0.25)",
     transition: "opacity 0.3s ease-in-out",
@@ -52,9 +54,11 @@ const BlocCard: React.FC<Props> = ({
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const url = `https://baseUrl/bloc/${blocId}`;
+  const url = `https://app.askbloc.ai/bloc/${blocId}`;
+  const embedUrl = `https://embed.askbloc.ai/${blocId}`;
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen2, setIsOpen2] = React.useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -62,6 +66,14 @@ const BlocCard: React.FC<Props> = ({
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function openModal2() {
+    setIsOpen2(true);
+  }
+
+  function closeModal2() {
+    setIsOpen2(false);
   }
 
   const isToday = (date: Date) => {
@@ -131,27 +143,75 @@ const BlocCard: React.FC<Props> = ({
   const handleDelete = async () => {
     dispatch(deleteBloc(token, blocId));
     dispatch(getAllBlocs(token));
-    showNotification("Deleted!", 3000);
+    dispatch(refreshBloc())
+    showNotification("info", "Bloc has been successfully Deleted!");
   };
+
+  const handleCookiesData = async() => {
+    const data = await blocExists(blocId);
+      if (data.isPublic) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc/get-public-chatId`,
+            {
+              headers: {
+                "BLOC-ID": blocId,
+              },
+            }
+          );
+          if (!res.ok) {
+            console.log("Network response for public chatid api was not ok!");
+          }
+          if (res.ok) {
+            const response = await res.json();
+            setCookie("chatId", response.chatId);
+          }
+        } catch (error) {
+          console.log("chatId public api error", error);
+        }
+      }
+      else{
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/v1/bloc/get-chatId`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "BLOC-ID": blocId,
+              },
+            }
+          );
+          if (!res.ok) {
+            console.log("Network response for chatid api was not ok!");
+          }
+          if (res.ok) {
+            const response = await res.json();
+            setCookie("chatId", response.chatId);
+          }
+        } catch (error) {
+          console.log("chatId api error", error);
+        }
+      }
+  }
 
   return (
     <>
-      <div className="w-full flex flex-col items-center justify-center gap-3 p-5 bg-[#181818] rounded-xl">
-        <div className="">
+      <div onClick={handleCookiesData} className="w-full flex flex-col items-center justify-center gap-3 p-5 bg-[#181818] transition-all duration-300 ease-linear hover:shadow-cardShadow hover:scale-[1.05] hover:-translate-y-1 rounded-xl">
           <Link href={`/new/bloc/${blocId}`}>
+        <div className="w-full mx-auto flex items-center justify-center my-1 mb-2">
             <Image src={blocImage} width={50} height={50} alt="bloc" />
-          </Link>
         </div>
+          {/* </Link> */}
         <div className="flex flex-col items-center justify-center gap-1">
-          <Link href={`/new/bloc/${blocId}`}>
+          {/* <Link href={`/new/bloc/${blocId}`}> */}
             <div className="font-spacegrotesk text-center font-medium text-lg leading-6 text-[#FFFFFFCC]">
               {blocName}
             </div>
-          </Link>
           <div className="text-center font-spacegrotesk text-xs text-[#FFFFFF99]">
             {formatDate(new Date(createdAt))} by {user && user.split(" ")[0]}
           </div>
         </div>
+          </Link>
         <div className="flex gap-2">
           <div
             onClick={() => router.push(`/new/bloc/${blocId}/settings`)}
@@ -166,7 +226,7 @@ const BlocCard: React.FC<Props> = ({
             <Image src="/icons/share.svg" width={18} height={18} alt="share" />
           </div>
           <div
-            onClick={handleDelete}
+            onClick={openModal2}
             className="rounded-full border border-solid border-[#FFFFFF1A] bg-[#141414] p-3"
           >
             <Image
@@ -194,7 +254,26 @@ const BlocCard: React.FC<Props> = ({
           customStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0)";
         }}
       >
-        <ShareModal name={blocName} url={url} BlocId={token} homePage={true} />
+        <ShareModal name={blocName} url={url} embedUrl={embedUrl} BlocId={blocId} homePage={true} />
+      </Modal>
+
+      <Modal
+        isOpen={modalIsOpen2}
+        //   onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal2}
+        style={customStyles}
+        contentLabel="Bloc Name"
+        ariaHideApp={false}
+        onAfterOpen={() => {
+          customStyles.content.opacity = 1;
+          customStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        }}
+        onAfterClose={() => {
+          customStyles.content.opacity = 0;
+          customStyles.overlay.backgroundColor = "rgba(0, 0, 0, 0)";
+        }}
+      >
+        <DeleteModal blocId={blocId} closeModal2={closeModal2} />
       </Modal>
     </>
   );

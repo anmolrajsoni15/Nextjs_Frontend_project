@@ -1,43 +1,68 @@
-import React from 'react'
-import './styles/globals.css'
-import { Providers } from './Redux/provider'
-import Script from 'next/script'
-import './globals.css'
-import Head from 'next/head'
+import React from "react";
+import "./styles/globals.css";
+import "./styles/tutorial.css";
+import { Providers } from "./Redux/provider";
+import Script from "next/script";
+import "./globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import Head from "next/head";
 
 export const metadata = {
-  title: 'Bloc',
-  description: 'Talk to your knowledge',
+  title: "Bloc",
+  description: "Talk to your knowledge",
   keywords: "", //todo work here
   icons: {
-    icon: { url: '/favicon/favicon.svg', type: 'image/svg' },
-    shortcut: { url: '/favicon/favicon.svg', type: 'image/svg' },
+    icon: { url: "/favicon/favicon.svg", type: "image/svg" },
+    shortcut: { url: "/favicon/favicon.svg", type: "image/svg" },
   },
-}
-
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <Head>
         <link rel="icon" href="favicon/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-chrome-192x192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="favicon/android-chrome-512x512.png" />
+        <link
+          rel="shortcut icon"
+          href="favicon/favicon.ico"
+          type="image/x-icon"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="favicon/android-chrome-192x192.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="favicon/android-chrome-512x512.png"
+        />
         <link rel="manifest" href="favicon/site.webmanifest" />
         <link rel="mask-icon" href="favicon/favicon.svg" />
+        
       </Head>
 
-      <body className='bg-black'>
-        <Providers>
-          {children}
-        </Providers>
-        <Script id='my-scr'>
+      <body className="bg-black">
+        <Providers>{children}</Providers>
+        <Script id="TZ16904571460453909">
+          {`window.blocConfig = {
+            blocId: "TZ16904571460453909",
+          }`}
+        </Script>
+      <Script async src="https://embed.askbloc.ai/api/embed" />
+
+        <Script id="my-scr">
           {` (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
         h._hjSettings={hjid:3442770,hjsv:6};
@@ -66,5 +91,5 @@ export default function RootLayout({
         />
       </body>
     </html>
-  )
+  );
 }

@@ -29,7 +29,7 @@ const SearchBar: React.FC<Props> = ({ setLayout, layout, onSearch }) => {
 
   return (
     <div className="flex items-center bg-[#ffffff23] rounded-md h-[50px] w-full">
-      <Image src="/icons/search-lg.svg" width={18} height={18} alt="search" className="opacity-30 mx-5" />
+      <Image src="/icons/search-lg.svg" width={18} height={18} alt="search" className="mx-5" />
       <input
         type="text"
         placeholder="Search for bloc"

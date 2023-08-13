@@ -1,7 +1,8 @@
 import './globals.css'
 import '../globals.css'
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import Navbar from "../components/landing_page/Navbar"
+import NewNavbar from "../components/common/NewNavbar"
+import Footer from "../components/ui/Footer/Footer";
 import React, { ReactNode } from 'react';
 
 export const metadata = {
@@ -17,7 +18,9 @@ export default function BlogLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className='text-white'>
-        <Navbar />
+      <div className="px-[4%] md:px-[7%]">
+      <NewNavbar />
+      </div>
         {children}
         <Footer />
       </body>

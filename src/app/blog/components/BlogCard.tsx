@@ -8,6 +8,13 @@ import { format } from "date-fns";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import SampleBlog from '../../../../public/images/blog_images/SampleBlog.jpg'
 
+function truncateExcerpt(excerpt: any, maxLength: number) {
+  if (excerpt.length <= maxLength) {
+    return excerpt;
+  }
+  return excerpt.substring(0, maxLength) + "...";
+}
+
 function BlogCard({ item }: { item: PostOrPage }) {
   return (
     // <Link href='/blog/abcd'>
@@ -51,7 +58,7 @@ function BlogCard({ item }: { item: PostOrPage }) {
           </div>
         </Link>
         <div className="font-inter font-normal text-base leading-6 text-[#A1A1AA]">
-          {item.excerpt}
+        {truncateExcerpt(item?.excerpt, 100)}
         </div>
       </div>
     </div>

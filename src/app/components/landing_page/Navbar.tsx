@@ -44,7 +44,7 @@ function Navbar() {
               classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
             />
           </Link> */}
-          <LoginButton text={'Continue with Google'} />
+          <LoginButton text={'Login with Google'} />
         </div>
       </div>
       {/* Mobile Button */}
@@ -104,7 +104,7 @@ function Navbar() {
                 classProperty="my-5 bg-[#0784C6] hover:bg-[#2793cd]"
               />
             </Link> */}
-            <LoginButton text={'Continue with Google'} />
+            <LoginButton text={'Login with Google'} />
           </div>
         </div>
       </div>

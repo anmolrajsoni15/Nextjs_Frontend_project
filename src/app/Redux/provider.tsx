@@ -3,14 +3,15 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
-// import { ToastContainer } from "react-toastify";
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 
 export function Providers({ children }:{children: React.ReactNode}) {
   return (
-    <Provider store={store}>
-      {children}
-      {/* <ToastContainer /> */}
-    </Provider>
+    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+      <Provider store={store}>
+        {children}
+      </Provider>
+    </SkeletonTheme>
   );
 }

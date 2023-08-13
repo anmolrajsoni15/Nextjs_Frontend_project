@@ -4,7 +4,7 @@ const GradientWrapper = ({ children, ...props }) => (
         className={`relative flex items-center justify-center flex-col ${props.className || ""}`}>
         <div className={`absolute m-auto blur-[150px] ${props.wrapperClassName || ""}`}
             style={{
-                background: '#D9D9D9',
+                background: '#828282',
             }}>
 
         </div>

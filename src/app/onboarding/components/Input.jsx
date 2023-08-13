@@ -14,7 +14,7 @@ function Input({ icon, value, editable, onKeyPress, onChange,placeholder }) {
   };
 
   return (
-    <div className="w-full h-14 md:h-[50px] my-4 flex flex-row justify-start items-center border-2 border-solid border-[#ffffff2f] rounded-md bg-[#292929] hover:bg-[#363636]">
+    <div className="w-full h-14 md:h-[50px] my-1 flex flex-row justify-start items-center border-2 border-solid border-[#ffffff2f] rounded-md bg-[#292929] hover:bg-[#363636]">
       <div className="icons w-[20%] text-[#f3f3f3cc] flex items-center justify-center">
         {icon}
       </div>

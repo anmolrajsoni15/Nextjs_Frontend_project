@@ -1,43 +1,22 @@
-'use client'
+import React from 'react'
+import NewDashboard from '../components/MainComponents/NewDashboard'
 
-import React, { useEffect } from 'react'
-import Sidebar from "../components/Sidebar";
-import MainLoading from '../components/MainLoading'
-import Loading from '../components/LoadingContainer/Loading'
-import Container from "../components/Container";
-import { getCookie } from 'cookies-next';
-import { getUser } from '../../services/apiServices';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../Redux/store';
-import { refreshBloc } from 'src/app/Redux/features/blocSlice';
+import type { Metadata } from "next";
 
-const NewDashboard = () => {
-  const dispatch = useDispatch();
-    // const [user, setUser] = React.useState<any>({});
-    const {user, loading} = useSelector((state: RootState) => state.user);
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    openGraph: {
+      title: "New Dashboard",
+    description: "This is the new dashboard",
+    type: "website"
+    },
+  };
+}
 
-    const token = getCookie('jwt');
-    useEffect(() => {
-        async function fetchData() {
-            dispatch(getUser(token));
-            // setUser(res);
-        }
-        fetchData();
-        dispatch(refreshBloc());
-
-    }, [])
+const page = () => {
   return (
-    <div>
-    {
-      loading ? <Loading /> : (
-        <main className='w-full h-full flex' id='my-container'>
-        <Sidebar userData={user} />
-        <Container userData={user} />
-    </main>
-      )
-    }
-    </div>
+    <NewDashboard />
   )
 }
 
-export default NewDashboard
+export default page

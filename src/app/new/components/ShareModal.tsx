@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 interface Props {
   name: string;
   url: string;
+  embedUrl?: string;
   BlocId?: any;
   homePage?: boolean;
 }
@@ -19,9 +20,9 @@ const ShareModal: React.FC<Props> = ({
   url,
   BlocId,
   homePage,
+  embedUrl,
 }) => {
   const router = useRouter();
-
 
   const [isClicked, setIsClicked] = useState(false);
   const [isEmbedClicked, setIsEmbedClicked] = useState(false);
@@ -33,16 +34,47 @@ const ShareModal: React.FC<Props> = ({
     setTimeout(() => setIsClicked(false), 300);
   };
 
+  const handleEmbedCopy = (e: any) => {
+    const value = `<script>
+    window.blocConfig = {
+      blocId: "${BlocId}",
+    }
+</script>
+
+<script src='https://embed.askbloc.ai/api/embed'>
+</script>
+                `;
+    navigator.clipboard.writeText(value);
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 300);
+  };
+
   const toggleEmbed = () => {
+    setTimeout(() => {
+      if (ref.current) {
+        const currentPosition = ref.current.scrollTop;
+        ref.current.scrollTo({
+          top: currentPosition + 330,
+          behavior: 'smooth',
+        });
+      }
+    }, 300);
+
     setIsMobileClicked(false);
     setIsEmbedClicked(!isEmbedClicked);
   };
 
   const ref = useRef<HTMLDivElement>(null);
   const toggleMobile = () => {
+    setTimeout(() => {
     if (ref.current) {
-      ref.current.scrollTop += 50;
+      const currentPosition = ref.current.scrollTop;
+      ref.current.scrollTo({
+        top: currentPosition + 230,
+        behavior: 'smooth',
+      });
     }
+  }, 300);
     setIsEmbedClicked(false);
     setIsMobileClicked(!isMobileClicked);
   };
@@ -51,9 +83,9 @@ const ShareModal: React.FC<Props> = ({
     <div className="flex flex-col w-[35vw] h-[520px] p-8 py-10 gap-5 items-center justify-start bg-[#181818] text-white rounded-lg">
       <div
         ref={ref}
-        className={`flex flex-col w-full ${
+        className={`inside_scroll flex flex-col w-full ${
           homePage ? "h-full" : "h-[80%]"
-        } overflow-y-auto gap-5 items-center justify-start`}
+        } transition-scroll duration-1500 ease-linear overflow-y-auto gap-5 items-center justify-start`}
       >
         <Image src="/icons/badge-check.svg" width={70} height={70} alt="tick" />
         <div className="font-spacegrotesk text-3xl font-medium text-[#FFFFFFCC] text-center">
@@ -102,7 +134,7 @@ const ShareModal: React.FC<Props> = ({
           <EmailShareButton url={url}>
             <div className="bg-[#2A2A2D] rounded-full p-5">
               <Image
-                src="/icons/alternate-email.svg"
+                src="/icons/icon-outline-mail.svg"
                 alt=""
                 width={20}
                 height={20}
@@ -120,7 +152,7 @@ const ShareModal: React.FC<Props> = ({
           </div>
         </div>
         <div
-          className={`flex flex-col w-11/12 items-center justify-center gap-5 mt-4 ${
+          className={`flex flex-col w-full items-center justify-center gap-5 mt-4 ${
             isEmbedClicked ? "flex" : "hidden"
           }`}
         >
@@ -128,13 +160,26 @@ const ShareModal: React.FC<Props> = ({
             Embed on Web App
           </div>
           <div className="text-center font-spacegrotesk font-medium text-sm leading-[18px] text-[#FCFCFD]">
-            To add the Bloc any where on your website, add this iframe to your
-            html code
+            To add a chat bubble at bottom right of your website add this script tag to your html code
           </div>
           <div className="bg-[#FFFFFF1A] w-full rounded-md items-start flex justify-between p-2">
-            <div className="w-3/4">{`<iframe src="https://www.bloc.co/chatbot-iframe/www-bloc-co-zf5ylnnju" width="100%" height="700" frameborder="0" ></iframe>`}</div>
+            <div className="w-[85%] flex items-center justify-center">
+              <div className="w-full overflow-x-hidden">
+                <pre className="w-full overflow-auto text-sm">
+{`<script>
+  window.blocConfig = {
+    blocId: "${BlocId}",
+  }
+</script>
+
+<script src='https://embed.askbloc.ai/api/embed'>
+</script>
+                `}
+                </pre>
+              </div>
+            </div>
             <div
-              onClick={handleCopy}
+              onClick={handleEmbedCopy}
               className={`w-10 h-9 border-[0.5px] border-[#FFFFFF1A] border-solid rounded-sm flex items-center justify-center cursor-pointer transition-transform duration-300 ${
                 isClicked ? "bg-[#373737]" : "bg-[#272727]"
               }`}

@@ -1,5 +1,6 @@
 import Footer from "../components/common/Footer";
 import Navbar from "../components/landing_page/Navbar";
+import NewNavbar from "../components/common/NewNavbar";
 import React, { ReactNode } from 'react';
 import '../globals.css'
 
@@ -16,7 +17,9 @@ export default function HrLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className='text-white'>
-        <Navbar />
+      <div className="px-[4%] md:px-[7%]">
+      <NewNavbar />
+      </div>
         {children}
         <Footer />
       </body>

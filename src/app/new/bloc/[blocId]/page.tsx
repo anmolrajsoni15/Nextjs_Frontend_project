@@ -7,12 +7,15 @@ import {
   getAllIntegrationOfBloc,
   getBlocData,
   getPrivateChatId,
+  blocExists,
+  getPublicBlocData,
 } from "../../../services/apiServices";
 import Modal from "react-modal";
 import { getCookie, setCookie } from "cookies-next";
 import Sidebar from "../../components/Sidebar";
 import TokenCard from "../../components/TokenCard";
-import NewChatContainer from "../../components/NewChatContainer";
+// import NewChatContainer from "../../components/NewChatContainer";
+import ChatContainer from "../../components/ChatContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Redux/store";
 import BlocHeader from "../../components/BlocHeader";
@@ -20,7 +23,10 @@ import { WhatsappShareButton, EmailShareButton } from "next-share";
 import QRCode from "react-qr-code";
 import { useRouter } from "next/navigation";
 import DataSources from "../../components/DataSources";
-import { deleteIntegrationUpdate } from "src/app/Redux/features/blocSlice";
+import { deleteIntegrationUpdate } from "../../../Redux/features/blocSlice";
+import MainPage from "../../components/BlocDataContainer/MainPage";
+import Header from "../../components/Topbar/Header";
+import NewSidebar from "../../components/SidebarContainer/NewSidebar";
 
 const customStyles = {
   content: {
@@ -72,7 +78,7 @@ const Page = ({ params: { blocId } }: Params) => {
     (state: RootState) => state.newBlocState.integrationLoading
   );
 
-  const chatId = useSelector((state: RootState) => state.newBlocState.chatId);
+  // const chatId = useSelector((state: RootState) => state.newBlocState.chatId);
 
   const { user, loading } = useSelector((state: RootState) => state.user);
   const [websites, setWebsites] = useState<any>([]);
@@ -103,7 +109,7 @@ const Page = ({ params: { blocId } }: Params) => {
           }
           if (item.type === "file") {
             setFiles((prev: any) => [...prev, item]);
-          } else {
+          } else if(item.type !== "website" && item.type !== "file"){
             setOthers((prev: any) => [...prev, item]);
           }
         });
@@ -112,21 +118,42 @@ const Page = ({ params: { blocId } }: Params) => {
 
   useEffect(() => {
     dispatch(getAllIntegrationOfBloc(token, userToken));
+    const interval = setInterval(() => {
+      dispatch(getAllIntegrationOfBloc(token, userToken));
+    }, 60000);
+    return () => clearInterval(interval);
   }, [dispatch]);
-
+  
+  
   useEffect(() => {
     dispatch(getUser(userToken));
-    dispatch(getBlocData(userToken, token));
-    dispatch(getPrivateChatId(userToken, token));
+    
   }, [dispatch]);
 
-  useEffect(() => {
-    if (chatId !== undefined) {
-      setCookie("chatId", chatId);
-    }
-  }, [chatId]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const resp = await blocExists(token);
+  //     if(resp.isPublic){
+  //       dispatch(getPublicBlocData(token));
+  //     }
+  //     else{
+  //       dispatch(getBlocData(userToken, token));
+  //       dispatch(getPrivateChatId(userToken, token));
+  //     }
+  //   }
+  //   )();
+  // }
+  // , [dispatch]);
 
-  const url = `https://baseUrl/bloc/${blocId}`;
+
+  // useEffect(() => {
+  //   if (chatId !== undefined) {
+  //     setCookie("chatId", chatId);
+  //   }
+  // }, [chatId]);
+
+  const url = `https://app.askbloc.ai/bloc/${blocId}`;
+  const embedUrl = `https://embed.askbloc.ai/bloc/${blocId}`
 
   const [isClicked, setIsClicked] = useState(false);
   const [isEmbedClicked, setIsEmbedClicked] = useState(false);
@@ -152,21 +179,36 @@ const Page = ({ params: { blocId } }: Params) => {
     setIsMobileClicked(!isMobileClicked);
   };
 
+  const [isFixed, setIsFixed] = useState(false);
+  const [progress, setProgress] = useState(25);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const fixedPosition = 93; // Change this value to the desired scroll position
+      if (window.pageYOffset > fixedPosition) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <main className="w-full h-full flex">
-      <Sidebar userData={user} />
+    <main id="my-container" className="w-full h-full flex">
+      <NewSidebar page={"home"} progress={progress} setProgress={setProgress} userData={user} />
       <div className="w-full h-full flex flex-col items-center justify-start ml-20 md:ml-24">
-        <BlocHeader blocData={blocData} user={user} />
+        <Header position={`outside`} url={`/new/dashboard`} tokens={user.credits} />
         <div className="flex flex-col items-center justify-center gap-9 w-full mb-20">
-          <div className="w-full flex flex-col lg:flex-row items-start justify-center px-16 gap-10">
-            <div className="flex flex-col items-center justify-start w-full lg:w-1/2">
-              <DataSources website={websites} file={files} other={others} />
-              <button onClick={()=> router.push(`/new/bloc/${blocId}/datasources`)} className="font-spacegrotesk text-sm font-medium bg-[#0784C6] rounded px-6 py-2 my-10">
-                Add more Data sources
-              </button>
+          <div className="w-full flex flex-col lg:flex-row items-start justify-start">
+            <div className="flex flex-col items-center justify-start w-full px-[50px] lg:w-[55%]">
+              <MainPage blocDetails={blocData} />
             </div>
-            <div className="flex items-start justify-start w-full lg:w-1/2">
-              <NewChatContainer blocData={blocData} />
+            <div className={`flex items-start justify-start ${isFixed ? 'fixed top-[4%] right-[50px] w-[calc(45%-143.5px)] h-screen overflow-auto' : 'px-[50px] w-[45%]'}`}>
+              <ChatContainer />
             </div>
           </div>
         </div>
@@ -285,7 +327,7 @@ const Page = ({ params: { blocId } }: Params) => {
                 your html code
               </div>
               <div className="bg-[#FFFFFF1A] w-full rounded-md items-start flex justify-between p-2">
-                <div className="w-3/4">{`<iframe src="https://www.bloc.co/chatbot-iframe/www-bloc-co-zf5ylnnju" width="100%" height="700" frameborder="0" ></iframe>`}</div>
+                <div className="w-3/4">{`<iframe src=${embedUrl} width="100%" height="700" frameborder="0" ></iframe>`}</div>
                 <div
                   onClick={handleCopy}
                   className={`w-10 h-9 border-[0.5px] border-[#FFFFFF1A] border-solid rounded-sm flex items-center justify-center cursor-pointer transition-transform duration-300 ${

@@ -7,7 +7,6 @@ import { format } from "date-fns";
 import React from "react";
 import { getSinglePost } from "../../../lib/ghost-client";
 import "../../style.css";
-import SampleBlog from "../../../../../public/images/blog_images/SampleBlog.jpg";
 
 // SEO
 export async function generateMetadata({
@@ -102,7 +101,7 @@ async function Read({ params }: { params: { slug: string } }) {
           </div>
           <div className="flex w-full items-center justify-center">
             <Image
-              src={getPost?.feature_image || SampleBlog}
+              src={getPost?.feature_image || '/images/blog_images/SampleBlog.jpg'}
               alt={getPost?.feature_image_alt || ""}
               width={800}
               height={530}
@@ -117,6 +116,7 @@ async function Read({ params }: { params: { slug: string } }) {
             ></div>
           </div>
         </div>
+        
       </main>
     </>
   );

@@ -29,7 +29,7 @@ function Hero() {
               {/* <Link href={'https://nsbxei0ai38.typeform.com/to/fd3UK76K'}>
               <Button text={'Join the Waitlist'} classProperties="bg-[#1C1C1C] hover:border-[#ffffffa3]"/>
               </Link> */}
-              <LoginButton text={'Continue with Google'} />
+              <LoginButton text={'Login with Google'} />
             </div>
           </div>
           <div className="right w-full md:w-1/2 flex items-center justify-center md:justify-center md:items-center lg:items-center lg:justify-start">

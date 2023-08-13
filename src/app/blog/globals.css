@@ -7,7 +7,8 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    color:'white'
+    color:#FFFFFFCC;
+    background: #121212;
   }
 
   .content p, .content ol{
@@ -16,6 +17,26 @@ html, body {
     line-height: 28px;
     font-weight: 400;
     font-family: 'Inter', 'sans-serif';
+  }
+
+  .content ol, .content li{
+    list-style: auto;
+    margin-left: 1.5rem;
+  }
+
+  .content blockquote{
+    position: relative;
+    margin: 1.5em 1em;
+  }
+
+  .content blockquote::before{
+    background: #28A1FF;
+    bottom: 0;
+    content: "";
+    left: -1.0em;
+    position: absolute;
+    top: 0;
+    width: 0.2rem;
   }
 
   

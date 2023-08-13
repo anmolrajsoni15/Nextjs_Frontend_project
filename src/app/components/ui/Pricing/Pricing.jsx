@@ -50,7 +50,7 @@ const Pricing = () => {
     "radial-gradient(130.39% 130.39% at 51.31% -0.71%, #1F2937 0%, rgba(31, 41, 55, 0) 100%)";
 
   return (
-    <SectionWrapper id="pricing" className="w-[85%] mx-auto">
+    <SectionWrapper id="pricing" className="w-full mx-auto">
       <div className="relative max-w-2xl mx-auto text-center flex flex-col gap-4 items-center justify-center">
         <h2 className="text-gray-50 text-3xl font-semibold font-poppins sm:text-4xl">
           Find a plan to power your business
